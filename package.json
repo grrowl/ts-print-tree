@@ -1,6 +1,6 @@
 {
   "name": "ts-print-tree",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Print a file tree of a project and its exports",
   "homepage": "https://github.com/grrowl/ts-print-tree",
   "keywords": [
