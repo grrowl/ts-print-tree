@@ -5,14 +5,72 @@ exports[`tree module calls tree() and matches console.log snapshot 1`] = `
   [
     "└─ src/
    ├─ cli.ts
-   ├─ defaults.ts
-   └─ index.ts
-      └─ function readTsConfig(rootDir: string): ParsedCommandLine
-      └─ function createProgram(rootDir: string): Program
-      └─ function analyzeFile(sourceFile: SourceFile, typeChecker: TypeChecker): string
-      └─ function traverseDirectory(dir: string, program: Program, shouldIgnore: (path: string) => boolean, prefix: string): string
-      └─ function shouldIgnore(ignoredPatterns: (string | RegExp)[], pathToCheck: string): boolean
-      └─ function tree(rootDir: string, ignored: (string | RegExp)[]): void
+   ├─ index.ts
+   │  └─ const ignoredPatterns
+   │  └─ function readTsConfig(rootDir: string): ParsedCommandLine
+   │  └─ function createProgram(rootDir: string): Program
+   │  └─ function analyzeFile(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): string
+   │  └─ function traverseDirectory(dir: string, program: Program, shouldIgnore: (path: string) => boolean, visibilityLevel: VisibilityLevel, prefix: string): string
+   │  └─ function shouldIgnore(ignoredPatterns: (string | RegExp)[], pathToCheck: string): boolean
+   │  └─ function tree(rootDir: string, ignored: (string | RegExp)[], visibilityLevel: VisibilityLevel): void
+   └─ tests/
+      ├─ class.ts
+      │  └─ export default class DefaultClass
+      │     ├─ constructor(baz: number[]): void
+      │  └─ class NamedClass
+      │     ├─ constructor(): void
+      │     ├─ double(): void
+      │     ├─ octuple(): void
+      └─ consts.ts
+         └─ const publicArray
+         └─ interface PublicInterface
+         └─ const publicFunction
+",
+  ],
+]
+`;
+
+exports[`tree module calls tree() with custom ignored patterns and matches console.log snapshot 1`] = `
+[
+  [
+    "",
+  ],
+]
+`;
+
+exports[`tree module calls tree() with custom visibility level and matches console.log snapshot 1`] = `
+[
+  [
+    "└─ src/
+   ├─ cli.ts
+   │  └─ private const args
+   ├─ index.ts
+   │  └─ const ignoredPatterns
+   │  └─ function readTsConfig(rootDir: string): ParsedCommandLine
+   │  └─ function createProgram(rootDir: string): Program
+   │  └─ function analyzeFile(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): string
+   │  └─ function traverseDirectory(dir: string, program: Program, shouldIgnore: (path: string) => boolean, visibilityLevel: VisibilityLevel, prefix: string): string
+   │  └─ function shouldIgnore(ignoredPatterns: (string | RegExp)[], pathToCheck: string): boolean
+   │  └─ function tree(rootDir: string, ignored: (string | RegExp)[], visibilityLevel: VisibilityLevel): void
+   └─ tests/
+      ├─ class.ts
+      │  └─ private const tree
+      │  └─ export default class DefaultClass
+      │     ├─ constructor(baz: number[]): void
+      │  └─ class NamedClass
+      │     ├─ constructor(): void
+      │     ├─ double(): void
+      │     ├─ private triple(): void
+      │     ├─ protected quadruple(): void
+      │     ├─ octuple(): void
+      └─ consts.ts
+         └─ private const privateString
+         └─ private const privateNumber
+         └─ private const privateBoolean
+         └─ const publicArray
+         └─ interface PublicInterface
+         └─ private const privateFunction
+         └─ const publicFunction
 ",
   ],
 ]

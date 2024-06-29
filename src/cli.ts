@@ -2,8 +2,7 @@
 
 import { readFileSync } from "fs";
 import { join } from "path";
-import { tree } from ".";
-import { ignoredPatterns } from "./defaults";
+import { ignoredPatterns, tree, VisibilityLevel } from ".";
 
 const args = process.argv.slice(2);
 if (args.includes("--help")) {
@@ -13,6 +12,8 @@ if (args.includes("--help")) {
   console.log("--ignore     Ignore files matching the specified patterns");
   console.log("--no-default Don't include default ignore patterns");
   console.log("--cwd        Set the current working directory");
+  console.log("--protected  Include protected members");
+  console.log("--private    Include private members");
 } else if (args.includes("--version")) {
   const packageJson = JSON.parse(
     readFileSync(join(__dirname, "../package.json"), "utf-8"),
@@ -20,11 +21,12 @@ if (args.includes("--help")) {
   console.log(`Version: ${packageJson.version}`);
 } else {
   const ignoreIndex = args.indexOf("--ignore");
-  let ignorePatterns: (string | RegExp)[] = [];
+  let ignoreArguments: (string | RegExp)[] = [];
   let cwd = process.cwd();
+  let visibilityLevel = VisibilityLevel.Public;
 
   if (ignoreIndex !== -1) {
-    ignorePatterns = args
+    ignoreArguments = args
       .slice(ignoreIndex + 1)
       .filter((pat) => !pat.startsWith("--"))
       .map((pat) =>
@@ -37,7 +39,7 @@ if (args.includes("--help")) {
   }
 
   if (!args.includes("--no-default")) {
-    ignorePatterns.push(...ignoredPatterns);
+    ignoreArguments.push(...ignoredPatterns);
   }
 
   const cwdIndex = args.indexOf("--cwd");
@@ -45,5 +47,11 @@ if (args.includes("--help")) {
     cwd = args[cwdIndex + 1];
   }
 
-  tree(cwd, ignorePatterns);
+  if (args.includes("--private")) {
+    visibilityLevel = VisibilityLevel.Private;
+  } else if (args.includes("--protected")) {
+    visibilityLevel = VisibilityLevel.Protected;
+  }
+
+  tree(cwd, ignoreArguments, visibilityLevel);
 }
