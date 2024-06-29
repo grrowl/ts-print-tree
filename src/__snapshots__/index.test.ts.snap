@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tree module calls tree() and matches console.log snapshot 1`] = `
+[
+  [
+    "└─ src/
+   ├─ cli.ts
+   ├─ defaults.ts
+   └─ index.ts
+      └─ function readTsConfig(rootDir: string): ParsedCommandLine
+      └─ function createProgram(rootDir: string): Program
+      └─ function analyzeFile(sourceFile: SourceFile, typeChecker: TypeChecker): string
+      └─ function traverseDirectory(dir: string, program: Program, shouldIgnore: (path: string) => boolean, prefix: string): string
+      └─ function shouldIgnore(ignoredPatterns: (string | RegExp)[], pathToCheck: string): boolean
+      └─ function tree(rootDir: string, ignored: (string | RegExp)[]): void
+",
+  ],
+]
+`;
