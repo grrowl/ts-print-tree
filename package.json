@@ -16,9 +16,9 @@
     "ts-print-tree": "./dist/cli.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && chmod +x dist/cli.js",
     "start": "node dist/cli.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^20.14.9",

@@ -1,6 +1,8 @@
+#!/usr/bin/env node
+
 import { readFileSync } from "fs";
 import { join } from "path";
-import { tree } from "./index";
+import { tree } from ".";
 
 const args = process.argv.slice(2);
 if (args.includes("--help")) {

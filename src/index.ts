@@ -45,7 +45,7 @@ function analyzeFile(
       ts.isClassDeclaration(node)
     ) {
       if (node.name) {
-        output += `     └─ ${node.name.text}`;
+        output += `      └─ ${node.name.text}`;
         if (ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) {
           const signature = typeChecker.getSignatureFromDeclaration(node);
           if (signature) {
