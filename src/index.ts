@@ -2,7 +2,6 @@ import * as ts from "typescript";
 import * as path from "path";
 import * as fs from "fs";
 
-// Function to read tsconfig.json
 function readTsConfig(rootDir: string): ts.ParsedCommandLine {
   const configPath = ts.findConfigFile(
     rootDir,
@@ -13,6 +12,11 @@ function readTsConfig(rootDir: string): ts.ParsedCommandLine {
     throw new Error("Could not find a valid 'tsconfig.json'.");
   }
   const configFile = ts.readConfigFile(configPath, ts.sys.readFile);
+  if (configFile.error) {
+    throw new Error(
+      `Error reading tsconfig.json: ${configFile.error.messageText}`,
+    );
+  }
   return ts.parseJsonConfigFileContent(
     configFile.config,
     ts.sys,
