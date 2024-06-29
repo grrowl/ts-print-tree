@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 import * as path from "path";
 import * as fs from "fs";
+import { ignoredPatterns } from "./defaults";
 
 function readTsConfig(rootDir: string): ts.ParsedCommandLine {
   const configPath = ts.findConfigFile(
@@ -128,15 +129,6 @@ function shouldIgnore(
     return pattern.test(relativePath);
   });
 }
-
-const ignoredPatterns: (string | RegExp)[] = [
-  "node_modules",
-  /\.git/,
-  /\.vscode/,
-  /\.DS_Store/,
-  /\.test\.ts$/,
-  /\.spec\.ts$/,
-];
 
 export function tree(
   rootDir: string = process.cwd(),
