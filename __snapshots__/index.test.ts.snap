@@ -7,6 +7,7 @@ exports[`tree module calls tree() and matches console.log snapshot 1`] = `
 ├─ dist/
 ├─ src/
 │  ├─ cli.ts
+│  ├─ defaults.ts
 │  └─ index.ts
       └─ readTsConfig(rootDir: string): ParsedCommandLine
       └─ createProgram(rootDir: string): Program

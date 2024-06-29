@@ -25,13 +25,11 @@ function readTsConfig(rootDir: string): ts.ParsedCommandLine {
   );
 }
 
-// Function to create a Program instance
 function createProgram(rootDir: string): ts.Program {
   const config = readTsConfig(rootDir);
   return ts.createProgram(config.fileNames, config.options);
 }
 
-// Function to analyze a TypeScript file
 function analyzeFile(
   sourceFile: ts.SourceFile,
   typeChecker: ts.TypeChecker,
@@ -46,7 +44,12 @@ function analyzeFile(
       ts.isClassDeclaration(node)
     ) {
       if (node.name) {
-        output += `      └─ ${node.name.text}`;
+        let exportType = "export";
+        if (ts.isFunctionDeclaration(node)) exportType = "function";
+        if (ts.isClassDeclaration(node)) exportType = "class";
+        if (ts.isInterfaceDeclaration(node)) exportType = "interface";
+
+        output += `└─ ${exportType} ${node.name.text}`;
         if (ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) {
           const signature = typeChecker.getSignatureFromDeclaration(node);
           if (signature) {
@@ -71,7 +74,6 @@ function analyzeFile(
   return output;
 }
 
-// Function to traverse directory and generate tree-like output
 function traverseDirectory(
   dir: string,
   program: ts.Program,
@@ -81,36 +83,43 @@ function traverseDirectory(
   let output = "";
   const entries = fs.readdirSync(dir, { withFileTypes: true });
 
-  entries.forEach((entry, index) => {
+  const relevantEntries = entries.filter((entry) => {
     const fullPath = path.join(dir, entry.name);
+    return (
+      !shouldIgnore(fullPath) &&
+      (entry.isDirectory() || (entry.isFile() && entry.name.endsWith(".ts")))
+    );
+  });
 
-    if (shouldIgnore(fullPath)) {
-      return;
-    }
-
-    const isLast = index === entries.length - 1;
+  relevantEntries.forEach((entry, index) => {
+    const fullPath = path.join(dir, entry.name);
+    const isLast = index === relevantEntries.length - 1;
     const newPrefix = prefix + (isLast ? "└─ " : "├─ ");
+    const continuationPrefix = prefix + (isLast ? "   " : "│  ");
 
     if (entry.isDirectory()) {
-      const subDirOutput = traverseDirectory(
+      const subDirContent = traverseDirectory(
         fullPath,
         program,
         shouldIgnore,
-        prefix + (isLast ? "   " : "│  "),
+        continuationPrefix,
       );
-      if (subDirOutput.trim()) {
-        output += `${newPrefix}${entry.name}/\n`;
-        output += subDirOutput;
+      if (subDirContent.trim()) {
+        output += `${newPrefix}${entry.name}/\n${subDirContent}`;
       }
-    } else if (
-      entry.isFile() &&
-      entry.name.endsWith(".ts") &&
-      !shouldIgnore(fullPath)
-    ) {
+    } else if (entry.isFile() && entry.name.endsWith(".ts")) {
       output += `${newPrefix}${entry.name}\n`;
       const sourceFile = program.getSourceFile(fullPath);
       if (sourceFile) {
-        output += analyzeFile(sourceFile, program.getTypeChecker());
+        const fileContent = analyzeFile(sourceFile, program.getTypeChecker());
+        if (fileContent.trim()) {
+          output +=
+            fileContent
+              .split("\n")
+              .filter((line) => line.trim())
+              .map((line) => continuationPrefix + line)
+              .join("\n") + "\n";
+        }
       }
     }
   });
