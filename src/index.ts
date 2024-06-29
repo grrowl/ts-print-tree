@@ -92,13 +92,16 @@ function traverseDirectory(
     const newPrefix = prefix + (isLast ? "└─ " : "├─ ");
 
     if (entry.isDirectory()) {
-      output += `${newPrefix}${entry.name}/\n`;
-      output += traverseDirectory(
+      const subDirOutput = traverseDirectory(
         fullPath,
         program,
         shouldIgnore,
         prefix + (isLast ? "   " : "│  "),
       );
+      if (subDirOutput.trim()) {
+        output += `${newPrefix}${entry.name}/\n`;
+        output += subDirOutput;
+      }
     } else if (
       entry.isFile() &&
       entry.name.endsWith(".ts") &&
