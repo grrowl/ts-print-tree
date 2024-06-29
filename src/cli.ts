@@ -6,12 +6,14 @@ import { tree, VisibilityLevel, TreeNode } from ".";
 
 const args = process.argv.slice(2);
 
-const defaultIgnore = ["node_modules",
+const defaultIgnore = [
+  "node_modules",
   /\.git/,
   /\.vscode/,
   /\.DS_Store/,
   /\.test\.ts$/,
-  /\.spec\.ts$/];
+  /\.spec\.ts$/,
+];
 
 function printHelp() {
   console.log("Usage: ts-print-tree [options]");
@@ -33,20 +35,32 @@ function printVersion() {
   console.log(`Version: ${packageJson.version}`);
 }
 
-export const pathFilter = (ignorePatterns: (string | RegExp)[]) =>
-  (path: string) => !ignorePatterns.some(pattern =>
-    typeof pattern === "string" ? path.includes(pattern) : pattern.test(path)
-  );
+export const pathFilter =
+  (ignorePatterns: (string | RegExp)[]) => (path: string) =>
+    !ignorePatterns.some((pattern) =>
+      typeof pattern === "string" ? path.includes(pattern) : pattern.test(path),
+    );
 
 function formatNodeName(node: TreeNode): string {
-  const visibilityPrefix = node.visibility && node.visibility !== 'public' ? `${node.visibility} ` : '';
-  const typePrefix = node.type !== 'directory' && node.type !== 'file' ? `${node.type} ` : '';
+  const visibilityPrefix =
+    node.visibility && node.visibility !== "public"
+      ? `${node.visibility} `
+      : "";
+  const typePrefix =
+    node.type !== "directory" && node.type !== "file" ? `${node.type} ` : "";
   return `${visibilityPrefix}${typePrefix}${node.name}`;
 }
 
-export function formatAsTree(node: TreeNode, prefix = "", isLast = true, isRoot = true): string {
+export function formatAsTree(
+  node: TreeNode,
+  prefix = "",
+  isLast = true,
+  isRoot = true,
+): string {
   const formattedName = formatNodeName(node);
-  let output = isRoot ? `${formattedName}${node.signature ? node.signature : ""}\n` : `${prefix}${isLast ? "└── " : "├── "}${formattedName}${node.signature ? node.signature : ""}\n`;
+  let output = isRoot
+    ? `${formattedName}${node.signature ? node.signature : ""}\n`
+    : `${prefix}${isLast ? "└── " : "├── "}${formattedName}${node.signature ? node.signature : ""}\n`;
 
   if (node.children) {
     node.children.forEach((child, index) => {
@@ -62,7 +76,7 @@ export function formatAsList(node: TreeNode, depth = 0): string {
   const formattedName = formatNodeName(node);
   let output = `${"  ".repeat(depth)}${depth === 0 ? "" : "- "}${formattedName}${node.signature ? node.signature : ""}\n`;
   if (node.children) {
-    node.children.forEach(child => {
+    node.children.forEach((child) => {
       output += formatAsList(child, depth + 1);
     });
   }
@@ -94,9 +108,7 @@ if (args.includes("--help")) {
   }
 
   if (!args.includes("--no-default")) {
-    ignorePatterns.push(
-      ...defaultIgnore
-    );
+    ignorePatterns.push(...defaultIgnore);
   }
 
   const cwdIndex = args.indexOf("--cwd");
@@ -114,11 +126,16 @@ if (args.includes("--help")) {
     outputFormat = "list";
   }
 
-  const projectStructure = tree(cwd, pathFilter(ignorePatterns), visibilityLevel);
+  const projectStructure = tree(
+    cwd,
+    pathFilter(ignorePatterns),
+    visibilityLevel,
+  );
 
-  const output = outputFormat === "tree"
-    ? formatAsTree(projectStructure)
-    : formatAsList(projectStructure);
+  const output =
+    outputFormat === "tree"
+      ? formatAsTree(projectStructure)
+      : formatAsList(projectStructure);
 
   console.log(output);
 }

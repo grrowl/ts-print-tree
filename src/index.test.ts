@@ -1,8 +1,8 @@
-import { jest, describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
 import { tree, VisibilityLevel } from ".";
 import { formatAsList, formatAsTree, pathFilter } from "./cli";
 
-const ignoredPatterns = [
+const defaultIgnore = [
   "node_modules",
   /\.git/,
   /\.vscode/,
@@ -13,7 +13,7 @@ const ignoredPatterns = [
 
 describe("cli module", () => {
   test("calls tree() and formats as tree", () => {
-    const result = tree();
+    const result = tree(process.cwd(), pathFilter(defaultIgnore));
     const formattedResult = formatAsTree(result);
     expect(formattedResult).toMatchSnapshot();
   });
@@ -23,7 +23,7 @@ describe("cli module", () => {
 
     const result = tree(
       process.cwd(),
-      pathFilter(ignoredPatterns),
+      pathFilter(defaultIgnore),
       customVisibilityLevel,
     );
     const formattedResult = formatAsList(result);
@@ -49,7 +49,7 @@ describe("tree module", () => {
 
     const result = tree(
       process.cwd(),
-      pathFilter(ignoredPatterns),
+      pathFilter(defaultIgnore),
       customVisibilityLevel,
     );
     expect(result).toMatchSnapshot();
