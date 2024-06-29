@@ -1,77 +1,3012 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`tree module calls tree() and matches console.log snapshot 1`] = `
-[
-  [
-    "└─ src/
-   ├─ cli.ts
-   ├─ index.ts
-   │  └─ const ignoredPatterns
-   │  └─ function tree(rootDir: string, ignored: (string | RegExp)[], visibilityLevel: VisibilityLevel): void
-   └─ tests/
-      ├─ class.ts
-      │  └─ export default class DefaultClass
-      │  └─ class NamedClass
-      └─ consts.ts
-         └─ const publicArray
-         └─ interface PublicInterface
-         └─ const publicFunction
-",
-  ],
-]
+exports[`cli module calls tree() and formats as list, with custom visibility level 1`] = `
+"ts-print-tree/
+  - src/
+    - cli.ts
+      - private const args
+      - private const defaultIgnore
+      - private function printHelp(): void
+      - private function printVersion(): void
+      - const pathFilter
+      - private function formatNodeName(node: TreeNode): string
+      - function formatAsTree(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string
+      - function formatAsList(node: TreeNode, depth: number): string
+    - index.ts
+      - interface TreeNode
+      - private function readTsConfig(rootDir: string): ParsedCommandLine
+      - private function createProgram(rootDir: string): Program
+      - private function analyzeFile(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): TreeNode[]
+      - private function traverseDirectory(dir: string, program: Program, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+      - function tree(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+    - tests/
+      - class.ts
+        - private const tree
+        - class DefaultClass
+          - private property foo
+          - private property bar
+          - private method constructor(baz: number[]): void
+        - class NamedClass
+          - private property version
+          - private method constructor(): void
+          - private method double(): void
+          - private method triple(): void
+          - protected method quadruple(): void
+          - private method octuple(): void
+      - consts.ts
+        - private const privateString
+        - private const privateNumber
+        - private const privateBoolean
+        - const publicArray
+        - interface PublicInterface
+        - private const privateFunction
+        - const publicFunction
+"
 `;
 
-exports[`tree module calls tree() with custom ignored patterns and matches console.log snapshot 1`] = `
-[
-  [
-    "└─ src/
-   └─ tests/
-      ├─ class.ts
-      │  └─ export default class DefaultClass
-      │  └─ class NamedClass
-      └─ consts.ts
-         └─ const publicArray
-         └─ interface PublicInterface
-         └─ const publicFunction
-",
-  ],
-]
+exports[`cli module calls tree() and formats as tree 1`] = `
+"ts-print-tree/
+├── node_modules/
+│   ├── @jest/
+│   │   ├── environment/
+│   │   │   └── build/
+│   │   │       └── index.d.ts
+│   │   │           ├── interface Jest
+│   │   │           ├── class JestEnvironment
+│   │   │           ├── interface JestEnvironmentConfig
+│   │   │           └── interface JestImportMeta
+│   │   ├── expect/
+│   │   │   └── build/
+│   │   │       └── index.d.ts
+│   │   │           └── const jestExpect
+│   │   ├── expect-utils/
+│   │   │   └── build/
+│   │   │       └── index.d.ts
+│   │   │           ├── const arrayBufferEquality
+│   │   │           ├── function emptyObject(obj: unknown): boolean
+│   │   │           ├── const equals
+│   │   │           ├── const getObjectKeys
+│   │   │           ├── const getObjectSubset
+│   │   │           ├── const getPath
+│   │   │           ├── function isA(typeName: string, value: unknown): boolean
+│   │   │           ├── const isError
+│   │   │           ├── const isOneline
+│   │   │           ├── const iterableEquality
+│   │   │           ├── const partition
+│   │   │           ├── const pathAsArray
+│   │   │           ├── const sparseArrayEquality
+│   │   │           ├── const subsetEquality
+│   │   │           ├── interface TesterContext
+│   │   │           └── const typeEquality
+│   │   ├── fake-timers/
+│   │   │   └── build/
+│   │   │       └── index.d.ts
+│   │   │           ├── class LegacyFakeTimers
+│   │   │           └── class ModernFakeTimers
+│   │   ├── globals/
+│   │   │   └── build/
+│   │   │       └── index.d.ts
+│   │   │           ├── const expect
+│   │   │           ├── const it
+│   │   │           ├── const test
+│   │   │           ├── const fit
+│   │   │           ├── const xit
+│   │   │           ├── const xtest
+│   │   │           ├── const describe
+│   │   │           ├── const xdescribe
+│   │   │           ├── const fdescribe
+│   │   │           ├── const beforeAll
+│   │   │           ├── const beforeEach
+│   │   │           ├── const afterEach
+│   │   │           └── const afterAll
+│   │   └── schemas/
+│   │       └── build/
+│   │           └── index.d.ts
+│   │               └── const SnapshotFormat
+│   ├── @sinclair/
+│   │   └── typebox/
+│   │       └── typebox.d.ts
+│   │           ├── const Modifier
+│   │           ├── const Hint
+│   │           ├── const Kind
+│   │           ├── const PatternBoolean
+│   │           ├── const PatternNumber
+│   │           ├── const PatternString
+│   │           ├── const PatternBooleanExact
+│   │           ├── const PatternNumberExact
+│   │           ├── const PatternStringExact
+│   │           ├── interface SchemaOptions
+│   │           ├── interface TKind
+│   │           ├── interface TSchema
+│   │           ├── interface NumericOptions
+│   │           ├── interface TAny
+│   │           ├── interface ArrayOptions
+│   │           ├── interface TArray
+│   │           ├── interface TBigInt
+│   │           ├── interface TBoolean
+│   │           ├── interface TComposite
+│   │           ├── interface TConstructor
+│   │           ├── interface DateOptions
+│   │           ├── interface TDate
+│   │           ├── interface TEnumOption
+│   │           ├── interface TEnum
+│   │           ├── interface TFunction
+│   │           ├── interface TInteger
+│   │           ├── interface IntersectOptions
+│   │           ├── interface TIntersect
+│   │           ├── interface TLiteral
+│   │           ├── interface TNever
+│   │           ├── interface TNot
+│   │           ├── interface TNull
+│   │           ├── interface TNumber
+│   │           ├── interface ObjectOptions
+│   │           ├── interface TObject
+│   │           ├── interface TPromise
+│   │           ├── interface TRecord
+│   │           ├── interface TThis
+│   │           ├── interface TRecursive
+│   │           ├── interface TRef
+│   │           ├── interface StringOptions
+│   │           ├── interface TString
+│   │           ├── interface TSymbol
+│   │           ├── interface TTemplateLiteral
+│   │           ├── interface TTuple
+│   │           ├── interface TUndefined
+│   │           ├── interface TUnion
+│   │           ├── interface Uint8ArrayOptions
+│   │           ├── interface TUint8Array
+│   │           ├── interface TUnknown
+│   │           ├── interface UnsafeOptions
+│   │           ├── interface TUnsafe
+│   │           ├── interface TVoid
+│   │           ├── class TypeGuardUnknownTypeError
+│   │           ├── class TemplateLiteralParserError
+│   │           ├── class TypeBuilder
+│   │           ├── class StandardTypeBuilder
+│   │           ├── class ExtendedTypeBuilder
+│   │           ├── const StandardType
+│   │           └── const Type
+│   ├── @types/
+│   │   ├── babel__core/
+│   │   │   └── index.d.ts
+│   │   │       ├── const version
+│   │   │       ├── const DEFAULT_EXTENSIONS
+│   │   │       ├── interface TransformOptions
+│   │   │       ├── interface TransformCaller
+│   │   │       ├── interface MatchPatternContext
+│   │   │       ├── function transform(code: string, callback: FileResultCallback): void
+│   │   │       ├── function transform(code: string, opts: TransformOptions, callback: FileResultCallback): void
+│   │   │       ├── function transform(code: string, opts: TransformOptions): BabelFileResult
+│   │   │       ├── function transformSync(code: string, opts: TransformOptions): BabelFileResult
+│   │   │       ├── function transformAsync(code: string, opts: TransformOptions): Promise<BabelFileResult>
+│   │   │       ├── function transformFile(filename: string, callback: FileResultCallback): void
+│   │   │       ├── function transformFile(filename: string, opts: TransformOptions, callback: FileResultCallback): void
+│   │   │       ├── function transformFileSync(filename: string, opts: TransformOptions): BabelFileResult
+│   │   │       ├── function transformFileAsync(filename: string, opts: TransformOptions): Promise<BabelFileResult>
+│   │   │       ├── function transformFromAst(ast: Node, code: string, callback: FileResultCallback): void
+│   │   │       ├── function transformFromAst(ast: Node, code: string, opts: TransformOptions, callback: FileResultCallback): void
+│   │   │       ├── function transformFromAstSync(ast: Node, code: string, opts: TransformOptions): BabelFileResult
+│   │   │       ├── function transformFromAstAsync(ast: Node, code: string, opts: TransformOptions): Promise<BabelFileResult>
+│   │   │       ├── interface PluginObj
+│   │   │       ├── interface BabelFile
+│   │   │       ├── interface PluginPass
+│   │   │       ├── interface BabelFileResult
+│   │   │       ├── interface BabelFileMetadata
+│   │   │       ├── interface BabelFileModulesMetadata
+│   │   │       ├── function parse(code: string, callback: FileParseCallback): void
+│   │   │       ├── function parse(code: string, options: TransformOptions, callback: FileParseCallback): void
+│   │   │       ├── function parse(code: string, options: TransformOptions): ParseResult<File>
+│   │   │       ├── function parseSync(code: string, options: TransformOptions): ParseResult<File>
+│   │   │       ├── function parseAsync(code: string, options: TransformOptions): Promise<ParseResult<File>>
+│   │   │       ├── function loadOptions(options: TransformOptions): object
+│   │   │       ├── function loadPartialConfig(options: TransformOptions): Readonly<PartialConfig>
+│   │   │       ├── function loadPartialConfigAsync(options: TransformOptions): Promise<Readonly<PartialConfig>>
+│   │   │       ├── interface PartialConfig
+│   │   │       ├── interface ConfigItem
+│   │   │       ├── function resolvePlugin(name: string, dirname: string): string
+│   │   │       ├── function resolvePreset(name: string, dirname: string): string
+│   │   │       ├── interface CreateConfigItemOptions
+│   │   │       ├── function createConfigItem(value: PluginTarget | [PluginTarget, PluginOptions] | [PluginTarget, PluginOptions, string], options: CreateConfigItemOptions): ConfigItem
+│   │   │       ├── interface ConfigAPI
+│   │   │       ├── interface SimpleCacheConfigurator
+│   │   │       └── interface EnvFunction
+│   │   ├── babel__generator/
+│   │   │   └── index.d.ts
+│   │   │       ├── interface GeneratorOptions
+│   │   │       ├── class CodeGenerator
+│   │   │       ├── function generate(ast: Node, opts: GeneratorOptions, code: string | { [filename: string]: string; }): GeneratorResult
+│   │   │       └── interface GeneratorResult
+│   │   ├── babel__template/
+│   │   │   └── index.d.ts
+│   │   │       ├── interface TemplateBuilderOptions
+│   │   │       ├── interface TemplateBuilder
+│   │   │       ├── const smart
+│   │   │       ├── const statement
+│   │   │       ├── const statements
+│   │   │       ├── const expression
+│   │   │       └── const program
+│   │   ├── babel__traverse/
+│   │   │   └── index.d.ts
+│   │   │       ├── class Scope
+│   │   │       ├── class Binding
+│   │   │       ├── interface VisitNodeObject
+│   │   │       ├── class NodePath
+│   │   │       ├── interface HubInterface
+│   │   │       ├── class Hub
+│   │   │       ├── interface TraversalContext
+│   │   │       └── interface VirtualTypeAliases
+│   │   ├── graceful-fs/
+│   │   │   └── index.d.ts
+│   │   │       └── function gracefulify(fsModule: T): T
+│   │   ├── istanbul-lib-coverage/
+│   │   │   └── index.d.ts
+│   │   │       ├── interface CoverageSummaryData
+│   │   │       ├── class CoverageSummary
+│   │   │       ├── interface CoverageMapData
+│   │   │       ├── class CoverageMap
+│   │   │       ├── interface Location
+│   │   │       ├── interface Range
+│   │   │       ├── interface BranchMapping
+│   │   │       ├── interface FunctionMapping
+│   │   │       ├── interface FileCoverageData
+│   │   │       ├── interface Totals
+│   │   │       ├── interface Coverage
+│   │   │       ├── class FileCoverage
+│   │   │       ├── const classes
+│   │   │       ├── function createCoverageMap(data: CoverageMap | CoverageMapData): CoverageMap
+│   │   │       ├── function createCoverageSummary(obj: CoverageSummary | CoverageSummaryData): CoverageSummary
+│   │   │       └── function createFileCoverage(pathOrObject: string | FileCoverage | FileCoverageData): FileCoverage
+│   │   ├── istanbul-lib-report/
+│   │   │   └── index.d.ts
+│   │   │       ├── function createContext(options: Partial<ContextOptions>): Context
+│   │   │       ├── function getDefaultWatermarks(): Watermarks
+│   │   │       ├── class ReportBase
+│   │   │       ├── interface ReportBaseOptions
+│   │   │       ├── interface ContextOptions
+│   │   │       ├── interface Context
+│   │   │       ├── class ContentWriter
+│   │   │       ├── class FileContentWriter
+│   │   │       ├── class ConsoleWriter
+│   │   │       ├── class FileWriter
+│   │   │       ├── interface XmlWriter
+│   │   │       ├── interface Watermarks
+│   │   │       ├── interface Node
+│   │   │       ├── interface ReportNode
+│   │   │       ├── interface Visitor
+│   │   │       └── interface Tree
+│   │   └── istanbul-reports/
+│   │       └── index.d.ts
+│   │           ├── function create(name: T, options: Partial<ReportOptions[T]>): ReportBase
+│   │           ├── interface FileOptions
+│   │           ├── interface ProjectOptions
+│   │           ├── interface ReportOptions
+│   │           ├── interface CloverOptions
+│   │           ├── interface CoberturaOptions
+│   │           ├── interface HtmlSpaOptions
+│   │           ├── interface HtmlOptions
+│   │           ├── interface LcovOptions
+│   │           ├── interface LcovOnlyOptions
+│   │           ├── interface TeamcityOptions
+│   │           ├── interface TextOptions
+│   │           └── interface LinkMapper
+│   ├── expect/
+│   │   └── build/
+│   │       └── index.d.ts
+│   │           ├── class AsymmetricMatcher
+│   │           ├── interface AsymmetricMatchers
+│   │           ├── interface BaseExpect
+│   │           ├── class JestAssertionError
+│   │           ├── interface Matchers
+│   │           ├── interface MatcherState
+│   │           └── interface MatcherUtils
+│   ├── jest-diff/
+│   │   └── build/
+│   │       └── index.d.ts
+│   │           ├── class Diff
+│   │           ├── function diff(a: any, b: any, options: DiffOptions): string
+│   │           ├── const DIFF_DELETE
+│   │           ├── const DIFF_EQUAL
+│   │           ├── const DIFF_INSERT
+│   │           ├── const diffLinesRaw
+│   │           ├── const diffLinesUnified
+│   │           ├── const diffLinesUnified2
+│   │           ├── const diffStringsRaw
+│   │           └── const diffStringsUnified
+│   ├── jest-matcher-utils/
+│   │   └── build/
+│   │       └── index.d.ts
+│   │           ├── const BOLD_WEIGHT
+│   │           ├── const diff
+│   │           ├── const DIM_COLOR
+│   │           ├── const ensureActualIsNumber
+│   │           ├── const ensureExpectedIsNonNegativeInteger
+│   │           ├── const ensureExpectedIsNumber
+│   │           ├── const ensureNoExpected
+│   │           ├── const ensureNumbers
+│   │           ├── const EXPECTED_COLOR
+│   │           ├── const getLabelPrinter
+│   │           ├── const highlightTrailingWhitespace
+│   │           ├── const INVERTED_COLOR
+│   │           ├── const matcherErrorMessage
+│   │           ├── const matcherHint
+│   │           ├── const pluralize
+│   │           ├── const printDiffOrStringify
+│   │           ├── const printExpected
+│   │           ├── const printReceived
+│   │           ├── function printWithType(name: string, value: T, print: (value: T) => string): string
+│   │           ├── const RECEIVED_COLOR
+│   │           ├── function replaceMatchedToAsymmetricMatcher(replacedExpected: unknown, replacedReceived: unknown, expectedCycles: unknown[], receivedCycles: unknown[]): { replacedExpected: unknown; replacedReceived: unknown; }
+│   │           ├── const stringify
+│   │           └── const SUGGEST_TO_CONTAIN_EQUAL
+│   ├── jest-message-util/
+│   │   └── build/
+│   │       └── index.d.ts
+│   │           ├── const formatExecError
+│   │           ├── const formatPath
+│   │           ├── const formatResultsErrors
+│   │           ├── const formatStackTrace
+│   │           ├── interface Frame
+│   │           ├── const getStackTraceLines
+│   │           ├── const getTopFrame
+│   │           ├── const indentAllLines
+│   │           └── const separateMessageFromStack
+│   ├── jest-mock/
+│   │   └── build/
+│   │       └── index.d.ts
+│   │           ├── const fn
+│   │           ├── interface Mock
+│   │           ├── const mocked
+│   │           ├── interface MockInstance
+│   │           ├── class ModuleMocker
+│   │           ├── interface Replaced
+│   │           ├── const replaceProperty
+│   │           ├── interface SpyInstance
+│   │           └── const spyOn
+│   ├── jest-snapshot/
+│   │   └── build/
+│   │       └── index.d.ts
+│   │           ├── const addSerializer
+│   │           ├── const buildSnapshotResolver
+│   │           ├── const cleanup
+│   │           ├── interface Context
+│   │           ├── const EXTENSION
+│   │           ├── const getSerializers
+│   │           ├── const isSnapshotPath
+│   │           ├── interface SnapshotMatchers
+│   │           ├── class SnapshotState
+│   │           ├── const toMatchInlineSnapshot
+│   │           ├── const toMatchSnapshot
+│   │           ├── const toThrowErrorMatchingInlineSnapshot
+│   │           └── const toThrowErrorMatchingSnapshot
+│   ├── pretty-format/
+│   │   └── build/
+│   │       └── index.d.ts
+│   │           ├── const DEFAULT_OPTIONS
+│   │           ├── interface Options
+│   │           ├── const plugins
+│   │           └── interface PrettyFormatOptions
+│   └── undici-types/
+│       ├── cache.d.ts
+│       │   ├── interface CacheStorage
+│       │   ├── interface Cache
+│       │   ├── interface CacheQueryOptions
+│       │   ├── interface MultiCacheQueryOptions
+│       │   └── const caches
+│       ├── client.d.ts
+│       │   └── class Client
+│       ├── content-type.d.ts
+│       │   ├── function parseMIMEType(input: string): "failure" | MIMEType
+│       │   └── function serializeAMimeType(mimeType: MIMEType): string
+│       ├── cookies.d.ts
+│       │   ├── interface Cookie
+│       │   ├── function deleteCookie(headers: Headers, name: string, attributes: { name?: string; domain?: string; }): void
+│       │   ├── function getCookies(headers: Headers): Record<string, string>
+│       │   ├── function getSetCookies(headers: Headers): Cookie[]
+│       │   └── function setCookie(headers: Headers, cookie: Cookie): void
+│       ├── fetch.d.ts
+│       │   ├── function fetch(input: RequestInfo, init: RequestInit): Promise<Response>
+│       │   ├── interface BodyMixin
+│       │   ├── interface SpecIterator
+│       │   ├── interface SpecIterableIterator
+│       │   ├── interface SpecIterable
+│       │   ├── class Headers
+│       │   ├── interface RequestInit
+│       │   ├── class Request
+│       │   ├── interface ResponseInit
+│       │   └── class Response
+│       ├── file.d.ts
+│       │   ├── interface BlobPropertyBag
+│       │   ├── interface FilePropertyBag
+│       │   └── class File
+│       ├── filereader.d.ts
+│       │   ├── class FileReader
+│       │   ├── interface ProgressEventInit
+│       │   └── class ProgressEvent
+│       ├── formdata.d.ts
+│       │   └── class FormData
+│       ├── handlers.d.ts
+│       │   ├── class RedirectHandler
+│       │   └── class DecoratorHandler
+│       ├── interceptors.d.ts
+│       │   └── function createRedirectInterceptor(opts: RedirectInterceptorOpts): DispatchInterceptor
+│       ├── patch.d.ts
+│       │   ├── interface EventInit
+│       │   ├── interface EventListenerOptions
+│       │   ├── interface AddEventListenerOptions
+│       │   ├── interface EventListenerObject
+│       │   └── interface EventListener
+│       └── websocket.d.ts
+│           ├── const WebSocket
+│           ├── const CloseEvent
+│           └── const MessageEvent
+└── src/
+    ├── cli.ts
+    │   ├── const pathFilter
+    │   ├── function formatAsTree(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string
+    │   └── function formatAsList(node: TreeNode, depth: number): string
+    ├── index.ts
+    │   ├── interface TreeNode
+    │   └── function tree(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+    └── tests/
+        ├── class.ts
+        │   ├── class DefaultClass
+        │   └── class NamedClass
+        └── consts.ts
+            ├── const publicArray
+            ├── interface PublicInterface
+            └── const publicFunction
+"
 `;
 
-exports[`tree module calls tree() with custom visibility level and matches console.log snapshot 1`] = `
-[
-  [
-    "└─ src/
-   ├─ cli.ts
-   │  └─ private const args
-   ├─ index.ts
-   │  └─ const ignoredPatterns
-   │  └─ private function readTsConfig(rootDir: string): ParsedCommandLine
-   │  └─ private function createProgram(rootDir: string): Program
-   │  └─ private function analyzeFile(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): string
-   │  └─ private function traverseDirectory(dir: string, program: Program, shouldIgnore: (path: string) => boolean, visibilityLevel: VisibilityLevel, prefix: string): string
-   │  └─ private function shouldIgnore(ignoredPatterns: (string | RegExp)[], pathToCheck: string): boolean
-   │  └─ function tree(rootDir: string, ignored: (string | RegExp)[], visibilityLevel: VisibilityLevel): void
-   └─ tests/
-      ├─ class.ts
-      │  └─ private const tree
-      │  └─ export default class DefaultClass
-      │     ├─ private constructor(baz: number[]): void
-      │  └─ class NamedClass
-      │     ├─ private constructor(): void
-      │     ├─ private double(): void
-      │     ├─ private triple(): void
-      │     ├─ protected quadruple(): void
-      │     ├─ private octuple(): void
-      └─ consts.ts
-         └─ private const privateString
-         └─ private const privateNumber
-         └─ private const privateBoolean
-         └─ const publicArray
-         └─ interface PublicInterface
-         └─ private const privateFunction
-         └─ const publicFunction
-",
+exports[`tree module calls tree() and matches result snapshot 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "Jest",
+                          "type": "interface",
+                          "visibility": "public",
+                        },
+                        {
+                          "children": [],
+                          "name": "JestEnvironment",
+                          "type": "class",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "JestEnvironmentConfig",
+                          "type": "interface",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "JestImportMeta",
+                          "type": "interface",
+                          "visibility": "public",
+                        },
+                      ],
+                      "name": "index.d.ts",
+                      "type": "file",
+                    },
+                  ],
+                  "name": "build/",
+                  "type": "directory",
+                },
+              ],
+              "name": "environment/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "jestExpect",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                      ],
+                      "name": "index.d.ts",
+                      "type": "file",
+                    },
+                  ],
+                  "name": "build/",
+                  "type": "directory",
+                },
+              ],
+              "name": "expect/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "arrayBufferEquality",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "emptyObject",
+                          "signature": "(obj: unknown): boolean",
+                          "type": "function",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "equals",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "getObjectKeys",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "getObjectSubset",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "getPath",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "isA",
+                          "signature": "(typeName: string, value: unknown): boolean",
+                          "type": "function",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "isError",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "isOneline",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "iterableEquality",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "partition",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "pathAsArray",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "sparseArrayEquality",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "subsetEquality",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "TesterContext",
+                          "type": "interface",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "typeEquality",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                      ],
+                      "name": "index.d.ts",
+                      "type": "file",
+                    },
+                  ],
+                  "name": "build/",
+                  "type": "directory",
+                },
+              ],
+              "name": "expect-utils/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [],
+                          "name": "LegacyFakeTimers",
+                          "type": "class",
+                          "visibility": "public",
+                        },
+                        {
+                          "children": [],
+                          "name": "ModernFakeTimers",
+                          "type": "class",
+                          "visibility": "public",
+                        },
+                      ],
+                      "name": "index.d.ts",
+                      "type": "file",
+                    },
+                  ],
+                  "name": "build/",
+                  "type": "directory",
+                },
+              ],
+              "name": "fake-timers/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "expect",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "it",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "test",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "fit",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "xit",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "xtest",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "describe",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "xdescribe",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "fdescribe",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "beforeAll",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "beforeEach",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "afterEach",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                        {
+                          "name": "afterAll",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                      ],
+                      "name": "index.d.ts",
+                      "type": "file",
+                    },
+                  ],
+                  "name": "build/",
+                  "type": "directory",
+                },
+              ],
+              "name": "globals/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "name": "SnapshotFormat",
+                          "type": "const",
+                          "visibility": "public",
+                        },
+                      ],
+                      "name": "index.d.ts",
+                      "type": "file",
+                    },
+                  ],
+                  "name": "build/",
+                  "type": "directory",
+                },
+              ],
+              "name": "schemas/",
+              "type": "directory",
+            },
+          ],
+          "name": "@jest/",
+          "type": "directory",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "Modifier",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Hint",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Kind",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "PatternBoolean",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "PatternNumber",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "PatternString",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "PatternBooleanExact",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "PatternNumberExact",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "PatternStringExact",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "SchemaOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TKind",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TSchema",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "NumericOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TAny",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ArrayOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TArray",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TBigInt",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TBoolean",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TComposite",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TConstructor",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "DateOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TDate",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TEnumOption",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TEnum",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TFunction",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TInteger",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "IntersectOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TIntersect",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TLiteral",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TNever",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TNot",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TNull",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TNumber",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ObjectOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TObject",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TPromise",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TRecord",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TThis",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TRecursive",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TRef",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "StringOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TString",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TSymbol",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TTemplateLiteral",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TTuple",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TUndefined",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TUnion",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Uint8ArrayOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TUint8Array",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TUnknown",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "UnsafeOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TUnsafe",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TVoid",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "TypeGuardUnknownTypeError",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "TemplateLiteralParserError",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "TypeBuilder",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "StandardTypeBuilder",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "ExtendedTypeBuilder",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "StandardType",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Type",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "typebox.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "typebox/",
+              "type": "directory",
+            },
+          ],
+          "name": "@sinclair/",
+          "type": "directory",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "version",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "DEFAULT_EXTENSIONS",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TransformOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TransformCaller",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "MatchPatternContext",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transform",
+                      "signature": "(code: string, callback: FileResultCallback): void",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transform",
+                      "signature": "(code: string, opts: TransformOptions, callback: FileResultCallback): void",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transform",
+                      "signature": "(code: string, opts: TransformOptions): BabelFileResult",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transformSync",
+                      "signature": "(code: string, opts: TransformOptions): BabelFileResult",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transformAsync",
+                      "signature": "(code: string, opts: TransformOptions): Promise<BabelFileResult>",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transformFile",
+                      "signature": "(filename: string, callback: FileResultCallback): void",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transformFile",
+                      "signature": "(filename: string, opts: TransformOptions, callback: FileResultCallback): void",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transformFileSync",
+                      "signature": "(filename: string, opts: TransformOptions): BabelFileResult",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transformFileAsync",
+                      "signature": "(filename: string, opts: TransformOptions): Promise<BabelFileResult>",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transformFromAst",
+                      "signature": "(ast: Node, code: string, callback: FileResultCallback): void",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transformFromAst",
+                      "signature": "(ast: Node, code: string, opts: TransformOptions, callback: FileResultCallback): void",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transformFromAstSync",
+                      "signature": "(ast: Node, code: string, opts: TransformOptions): BabelFileResult",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "transformFromAstAsync",
+                      "signature": "(ast: Node, code: string, opts: TransformOptions): Promise<BabelFileResult>",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "PluginObj",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "BabelFile",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "PluginPass",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "BabelFileResult",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "BabelFileMetadata",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "BabelFileModulesMetadata",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "parse",
+                      "signature": "(code: string, callback: FileParseCallback): void",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "parse",
+                      "signature": "(code: string, options: TransformOptions, callback: FileParseCallback): void",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "parse",
+                      "signature": "(code: string, options: TransformOptions): ParseResult<File>",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "parseSync",
+                      "signature": "(code: string, options: TransformOptions): ParseResult<File>",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "parseAsync",
+                      "signature": "(code: string, options: TransformOptions): Promise<ParseResult<File>>",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "loadOptions",
+                      "signature": "(options: TransformOptions): object",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "loadPartialConfig",
+                      "signature": "(options: TransformOptions): Readonly<PartialConfig>",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "loadPartialConfigAsync",
+                      "signature": "(options: TransformOptions): Promise<Readonly<PartialConfig>>",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "PartialConfig",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ConfigItem",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "resolvePlugin",
+                      "signature": "(name: string, dirname: string): string",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "resolvePreset",
+                      "signature": "(name: string, dirname: string): string",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "CreateConfigItemOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "createConfigItem",
+                      "signature": "(value: PluginTarget | [PluginTarget, PluginOptions] | [PluginTarget, PluginOptions, string], options: CreateConfigItemOptions): ConfigItem",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ConfigAPI",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "SimpleCacheConfigurator",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "EnvFunction",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "babel__core/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "GeneratorOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "CodeGenerator",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "generate",
+                      "signature": "(ast: Node, opts: GeneratorOptions, code: string | { [filename: string]: string; }): GeneratorResult",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "GeneratorResult",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "babel__generator/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "TemplateBuilderOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TemplateBuilder",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "smart",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "statement",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "statements",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "expression",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "program",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "babel__template/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [],
+                      "name": "Scope",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "Binding",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "VisitNodeObject",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "NodePath",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "HubInterface",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "Hub",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TraversalContext",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "VirtualTypeAliases",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "babel__traverse/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "gracefulify",
+                      "signature": "(fsModule: T): T",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "graceful-fs/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "CoverageSummaryData",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "CoverageSummary",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "CoverageMapData",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "CoverageMap",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Location",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Range",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "BranchMapping",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "FunctionMapping",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "FileCoverageData",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Totals",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Coverage",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "FileCoverage",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "classes",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "createCoverageMap",
+                      "signature": "(data: CoverageMap | CoverageMapData): CoverageMap",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "createCoverageSummary",
+                      "signature": "(obj: CoverageSummary | CoverageSummaryData): CoverageSummary",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "createFileCoverage",
+                      "signature": "(pathOrObject: string | FileCoverage | FileCoverageData): FileCoverage",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "istanbul-lib-coverage/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "createContext",
+                      "signature": "(options: Partial<ContextOptions>): Context",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "getDefaultWatermarks",
+                      "signature": "(): Watermarks",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "ReportBase",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ReportBaseOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ContextOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Context",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "ContentWriter",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "FileContentWriter",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "ConsoleWriter",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "FileWriter",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "XmlWriter",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Watermarks",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Node",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ReportNode",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Visitor",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Tree",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "istanbul-lib-report/",
+              "type": "directory",
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "create",
+                      "signature": "(name: T, options: Partial<ReportOptions[T]>): ReportBase",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "FileOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ProjectOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ReportOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "CloverOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "CoberturaOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "HtmlSpaOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "HtmlOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "LcovOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "LcovOnlyOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TeamcityOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "TextOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "LinkMapper",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "istanbul-reports/",
+              "type": "directory",
+            },
+          ],
+          "name": "@types/",
+          "type": "directory",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [],
+                      "name": "AsymmetricMatcher",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "AsymmetricMatchers",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "BaseExpect",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "JestAssertionError",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Matchers",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "MatcherState",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "MatcherUtils",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "build/",
+              "type": "directory",
+            },
+          ],
+          "name": "expect/",
+          "type": "directory",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [],
+                      "name": "Diff",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "diff",
+                      "signature": "(a: any, b: any, options: DiffOptions): string",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "DIFF_DELETE",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "DIFF_EQUAL",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "DIFF_INSERT",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "diffLinesRaw",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "diffLinesUnified",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "diffLinesUnified2",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "diffStringsRaw",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "diffStringsUnified",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "build/",
+              "type": "directory",
+            },
+          ],
+          "name": "jest-diff/",
+          "type": "directory",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "BOLD_WEIGHT",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "diff",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "DIM_COLOR",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ensureActualIsNumber",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ensureExpectedIsNonNegativeInteger",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ensureExpectedIsNumber",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ensureNoExpected",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "ensureNumbers",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "EXPECTED_COLOR",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "getLabelPrinter",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "highlightTrailingWhitespace",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "INVERTED_COLOR",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "matcherErrorMessage",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "matcherHint",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "pluralize",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "printDiffOrStringify",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "printExpected",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "printReceived",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "printWithType",
+                      "signature": "(name: string, value: T, print: (value: T) => string): string",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "RECEIVED_COLOR",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "replaceMatchedToAsymmetricMatcher",
+                      "signature": "(replacedExpected: unknown, replacedReceived: unknown, expectedCycles: unknown[], receivedCycles: unknown[]): { replacedExpected: unknown; replacedReceived: unknown; }",
+                      "type": "function",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "stringify",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "SUGGEST_TO_CONTAIN_EQUAL",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "build/",
+              "type": "directory",
+            },
+          ],
+          "name": "jest-matcher-utils/",
+          "type": "directory",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "formatExecError",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "formatPath",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "formatResultsErrors",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "formatStackTrace",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Frame",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "getStackTraceLines",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "getTopFrame",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "indentAllLines",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "separateMessageFromStack",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "build/",
+              "type": "directory",
+            },
+          ],
+          "name": "jest-message-util/",
+          "type": "directory",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "fn",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Mock",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "mocked",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "MockInstance",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "ModuleMocker",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Replaced",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "replaceProperty",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "SpyInstance",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "spyOn",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "build/",
+              "type": "directory",
+            },
+          ],
+          "name": "jest-mock/",
+          "type": "directory",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "addSerializer",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "buildSnapshotResolver",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "cleanup",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Context",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "EXTENSION",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "getSerializers",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "isSnapshotPath",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "SnapshotMatchers",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "children": [],
+                      "name": "SnapshotState",
+                      "type": "class",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "toMatchInlineSnapshot",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "toMatchSnapshot",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "toThrowErrorMatchingInlineSnapshot",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "toThrowErrorMatchingSnapshot",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "build/",
+              "type": "directory",
+            },
+          ],
+          "name": "jest-snapshot/",
+          "type": "directory",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "DEFAULT_OPTIONS",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "Options",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "plugins",
+                      "type": "const",
+                      "visibility": "public",
+                    },
+                    {
+                      "name": "PrettyFormatOptions",
+                      "type": "interface",
+                      "visibility": "public",
+                    },
+                  ],
+                  "name": "index.d.ts",
+                  "type": "file",
+                },
+              ],
+              "name": "build/",
+              "type": "directory",
+            },
+          ],
+          "name": "pretty-format/",
+          "type": "directory",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "name": "CacheStorage",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "Cache",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "CacheQueryOptions",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "MultiCacheQueryOptions",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "caches",
+                  "type": "const",
+                  "visibility": "public",
+                },
+              ],
+              "name": "cache.d.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "children": [],
+                  "name": "Client",
+                  "type": "class",
+                  "visibility": "public",
+                },
+              ],
+              "name": "client.d.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "name": "parseMIMEType",
+                  "signature": "(input: string): "failure" | MIMEType",
+                  "type": "function",
+                  "visibility": "public",
+                },
+                {
+                  "name": "serializeAMimeType",
+                  "signature": "(mimeType: MIMEType): string",
+                  "type": "function",
+                  "visibility": "public",
+                },
+              ],
+              "name": "content-type.d.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "name": "Cookie",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "deleteCookie",
+                  "signature": "(headers: Headers, name: string, attributes: { name?: string; domain?: string; }): void",
+                  "type": "function",
+                  "visibility": "public",
+                },
+                {
+                  "name": "getCookies",
+                  "signature": "(headers: Headers): Record<string, string>",
+                  "type": "function",
+                  "visibility": "public",
+                },
+                {
+                  "name": "getSetCookies",
+                  "signature": "(headers: Headers): Cookie[]",
+                  "type": "function",
+                  "visibility": "public",
+                },
+                {
+                  "name": "setCookie",
+                  "signature": "(headers: Headers, cookie: Cookie): void",
+                  "type": "function",
+                  "visibility": "public",
+                },
+              ],
+              "name": "cookies.d.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "name": "fetch",
+                  "signature": "(input: RequestInfo, init: RequestInit): Promise<Response>",
+                  "type": "function",
+                  "visibility": "public",
+                },
+                {
+                  "name": "BodyMixin",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "SpecIterator",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "SpecIterableIterator",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "SpecIterable",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "children": [],
+                  "name": "Headers",
+                  "type": "class",
+                  "visibility": "public",
+                },
+                {
+                  "name": "RequestInit",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "children": [],
+                  "name": "Request",
+                  "type": "class",
+                  "visibility": "public",
+                },
+                {
+                  "name": "ResponseInit",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "children": [],
+                  "name": "Response",
+                  "type": "class",
+                  "visibility": "public",
+                },
+              ],
+              "name": "fetch.d.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "name": "BlobPropertyBag",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "FilePropertyBag",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "children": [],
+                  "name": "File",
+                  "type": "class",
+                  "visibility": "public",
+                },
+              ],
+              "name": "file.d.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "children": [],
+                  "name": "FileReader",
+                  "type": "class",
+                  "visibility": "public",
+                },
+                {
+                  "name": "ProgressEventInit",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "children": [],
+                  "name": "ProgressEvent",
+                  "type": "class",
+                  "visibility": "public",
+                },
+              ],
+              "name": "filereader.d.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "children": [],
+                  "name": "FormData",
+                  "type": "class",
+                  "visibility": "public",
+                },
+              ],
+              "name": "formdata.d.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "children": [],
+                  "name": "RedirectHandler",
+                  "type": "class",
+                  "visibility": "public",
+                },
+                {
+                  "children": [],
+                  "name": "DecoratorHandler",
+                  "type": "class",
+                  "visibility": "public",
+                },
+              ],
+              "name": "handlers.d.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "name": "createRedirectInterceptor",
+                  "signature": "(opts: RedirectInterceptorOpts): DispatchInterceptor",
+                  "type": "function",
+                  "visibility": "public",
+                },
+              ],
+              "name": "interceptors.d.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "name": "EventInit",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "EventListenerOptions",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "AddEventListenerOptions",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "EventListenerObject",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "EventListener",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+              ],
+              "name": "patch.d.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "name": "WebSocket",
+                  "type": "const",
+                  "visibility": "public",
+                },
+                {
+                  "name": "CloseEvent",
+                  "type": "const",
+                  "visibility": "public",
+                },
+                {
+                  "name": "MessageEvent",
+                  "type": "const",
+                  "visibility": "public",
+                },
+              ],
+              "name": "websocket.d.ts",
+              "type": "file",
+            },
+          ],
+          "name": "undici-types/",
+          "type": "directory",
+        },
+      ],
+      "name": "node_modules/",
+      "type": "directory",
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "name": "pathFilter",
+              "type": "const",
+              "visibility": "public",
+            },
+            {
+              "name": "formatAsTree",
+              "signature": "(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string",
+              "type": "function",
+              "visibility": "public",
+            },
+            {
+              "name": "formatAsList",
+              "signature": "(node: TreeNode, depth: number): string",
+              "type": "function",
+              "visibility": "public",
+            },
+          ],
+          "name": "cli.ts",
+          "type": "file",
+        },
+        {
+          "children": [
+            {
+              "name": "TreeNode",
+              "type": "interface",
+              "visibility": "public",
+            },
+            {
+              "name": "tree",
+              "signature": "(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode",
+              "type": "function",
+              "visibility": "public",
+            },
+          ],
+          "name": "index.ts",
+          "type": "file",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [],
+                  "name": "DefaultClass",
+                  "type": "class",
+                  "visibility": "public",
+                },
+                {
+                  "children": [],
+                  "name": "NamedClass",
+                  "type": "class",
+                  "visibility": "public",
+                },
+              ],
+              "name": "class.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "name": "publicArray",
+                  "type": "const",
+                  "visibility": "public",
+                },
+                {
+                  "name": "PublicInterface",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "publicFunction",
+                  "type": "const",
+                  "visibility": "public",
+                },
+              ],
+              "name": "consts.ts",
+              "type": "file",
+            },
+          ],
+          "name": "tests/",
+          "type": "directory",
+        },
+      ],
+      "name": "src/",
+      "type": "directory",
+    },
   ],
-]
+  "name": "ts-print-tree/",
+  "type": "directory",
+}
+`;
+
+exports[`tree module calls tree() with custom ignored patterns and matches result snapshot 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "name": "pathFilter",
+              "type": "const",
+              "visibility": "public",
+            },
+            {
+              "name": "formatAsTree",
+              "signature": "(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string",
+              "type": "function",
+              "visibility": "public",
+            },
+            {
+              "name": "formatAsList",
+              "signature": "(node: TreeNode, depth: number): string",
+              "type": "function",
+              "visibility": "public",
+            },
+          ],
+          "name": "cli.ts",
+          "type": "file",
+        },
+        {
+          "children": [
+            {
+              "name": "TreeNode",
+              "type": "interface",
+              "visibility": "public",
+            },
+            {
+              "name": "tree",
+              "signature": "(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode",
+              "type": "function",
+              "visibility": "public",
+            },
+          ],
+          "name": "index.ts",
+          "type": "file",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [],
+                  "name": "DefaultClass",
+                  "type": "class",
+                  "visibility": "public",
+                },
+                {
+                  "children": [],
+                  "name": "NamedClass",
+                  "type": "class",
+                  "visibility": "public",
+                },
+              ],
+              "name": "class.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "name": "publicArray",
+                  "type": "const",
+                  "visibility": "public",
+                },
+                {
+                  "name": "PublicInterface",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "publicFunction",
+                  "type": "const",
+                  "visibility": "public",
+                },
+              ],
+              "name": "consts.ts",
+              "type": "file",
+            },
+          ],
+          "name": "tests/",
+          "type": "directory",
+        },
+      ],
+      "name": "src/",
+      "type": "directory",
+    },
+  ],
+  "name": "ts-print-tree/",
+  "type": "directory",
+}
+`;
+
+exports[`tree module calls tree() with custom visibility level and matches result snapshot 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "name": "args",
+              "type": "const",
+              "visibility": "private",
+            },
+            {
+              "name": "defaultIgnore",
+              "type": "const",
+              "visibility": "private",
+            },
+            {
+              "name": "printHelp",
+              "signature": "(): void",
+              "type": "function",
+              "visibility": "private",
+            },
+            {
+              "name": "printVersion",
+              "signature": "(): void",
+              "type": "function",
+              "visibility": "private",
+            },
+            {
+              "name": "pathFilter",
+              "type": "const",
+              "visibility": "public",
+            },
+            {
+              "name": "formatNodeName",
+              "signature": "(node: TreeNode): string",
+              "type": "function",
+              "visibility": "private",
+            },
+            {
+              "name": "formatAsTree",
+              "signature": "(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string",
+              "type": "function",
+              "visibility": "public",
+            },
+            {
+              "name": "formatAsList",
+              "signature": "(node: TreeNode, depth: number): string",
+              "type": "function",
+              "visibility": "public",
+            },
+          ],
+          "name": "cli.ts",
+          "type": "file",
+        },
+        {
+          "children": [
+            {
+              "name": "TreeNode",
+              "type": "interface",
+              "visibility": "public",
+            },
+            {
+              "name": "readTsConfig",
+              "signature": "(rootDir: string): ParsedCommandLine",
+              "type": "function",
+              "visibility": "private",
+            },
+            {
+              "name": "createProgram",
+              "signature": "(rootDir: string): Program",
+              "type": "function",
+              "visibility": "private",
+            },
+            {
+              "name": "analyzeFile",
+              "signature": "(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): TreeNode[]",
+              "type": "function",
+              "visibility": "private",
+            },
+            {
+              "name": "traverseDirectory",
+              "signature": "(dir: string, program: Program, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode",
+              "type": "function",
+              "visibility": "private",
+            },
+            {
+              "name": "tree",
+              "signature": "(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode",
+              "type": "function",
+              "visibility": "public",
+            },
+          ],
+          "name": "index.ts",
+          "type": "file",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "name": "tree",
+                  "type": "const",
+                  "visibility": "private",
+                },
+                {
+                  "children": [
+                    {
+                      "name": "foo",
+                      "signature": undefined,
+                      "type": "property",
+                      "visibility": "private",
+                    },
+                    {
+                      "name": "bar",
+                      "signature": undefined,
+                      "type": "property",
+                      "visibility": "private",
+                    },
+                    {
+                      "name": "constructor",
+                      "signature": "(baz: number[]): void",
+                      "type": "method",
+                      "visibility": "private",
+                    },
+                  ],
+                  "name": "DefaultClass",
+                  "type": "class",
+                  "visibility": "public",
+                },
+                {
+                  "children": [
+                    {
+                      "name": "version",
+                      "signature": undefined,
+                      "type": "property",
+                      "visibility": "private",
+                    },
+                    {
+                      "name": "constructor",
+                      "signature": "(): void",
+                      "type": "method",
+                      "visibility": "private",
+                    },
+                    {
+                      "name": "double",
+                      "signature": "(): void",
+                      "type": "method",
+                      "visibility": "private",
+                    },
+                    {
+                      "name": "triple",
+                      "signature": "(): void",
+                      "type": "method",
+                      "visibility": "private",
+                    },
+                    {
+                      "name": "quadruple",
+                      "signature": "(): void",
+                      "type": "method",
+                      "visibility": "protected",
+                    },
+                    {
+                      "name": "octuple",
+                      "signature": "(): void",
+                      "type": "method",
+                      "visibility": "private",
+                    },
+                  ],
+                  "name": "NamedClass",
+                  "type": "class",
+                  "visibility": "public",
+                },
+              ],
+              "name": "class.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "name": "privateString",
+                  "type": "const",
+                  "visibility": "private",
+                },
+                {
+                  "name": "privateNumber",
+                  "type": "const",
+                  "visibility": "private",
+                },
+                {
+                  "name": "privateBoolean",
+                  "type": "const",
+                  "visibility": "private",
+                },
+                {
+                  "name": "publicArray",
+                  "type": "const",
+                  "visibility": "public",
+                },
+                {
+                  "name": "PublicInterface",
+                  "type": "interface",
+                  "visibility": "public",
+                },
+                {
+                  "name": "privateFunction",
+                  "type": "const",
+                  "visibility": "private",
+                },
+                {
+                  "name": "publicFunction",
+                  "type": "const",
+                  "visibility": "public",
+                },
+              ],
+              "name": "consts.ts",
+              "type": "file",
+            },
+          ],
+          "name": "tests/",
+          "type": "directory",
+        },
+      ],
+      "name": "src/",
+      "type": "directory",
+    },
+  ],
+  "name": "ts-print-tree/",
+  "type": "directory",
+}
 `;

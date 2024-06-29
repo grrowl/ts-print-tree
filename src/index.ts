@@ -8,14 +8,21 @@ export enum VisibilityLevel {
   Private = 3,
 }
 
-export const ignoredPatterns: (string | RegExp)[] = [
-  "node_modules",
-  /\.git/,
-  /\.vscode/,
-  /\.DS_Store/,
-  /\.test\.ts$/,
-  /\.spec\.ts$/,
-];
+export interface TreeNode {
+  name: string;
+  type:
+    | "directory"
+    | "file"
+    | "function"
+    | "class"
+    | "method"
+    | "property"
+    | "interface"
+    | "const";
+  visibility?: "public" | "protected" | "private";
+  signature?: string;
+  children?: TreeNode[];
+}
 
 function readTsConfig(rootDir: string): ts.ParsedCommandLine {
   const configPath = ts.findConfigFile(
@@ -48,8 +55,8 @@ function analyzeFile(
   sourceFile: ts.SourceFile,
   typeChecker: ts.TypeChecker,
   visibilityLevel: VisibilityLevel,
-): string {
-  let output = "";
+): TreeNode[] {
+  const nodes: TreeNode[] = [];
 
   function getMethodSignature(
     method: ts.MethodDeclaration | ts.ConstructorDeclaration,
@@ -98,10 +105,10 @@ function analyzeFile(
       ts.isClassDeclaration(node) ||
       ts.isVariableStatement(node)
     ) {
-      let exportType = "";
+      let exportType: TreeNode["type"] = "const";
       let name = "";
       let isDefault = false;
-      let visibility = "private";
+      let visibility: TreeNode["visibility"] = "private";
 
       if (
         ts.isFunctionDeclaration(node) ||
@@ -117,150 +124,143 @@ function analyzeFile(
         isDefault = !!(
           ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Default
         );
-        visibility = getVisibility(node);
+        visibility = getVisibility(node) as TreeNode["visibility"];
       } else if (ts.isVariableStatement(node)) {
         const declaration = node.declarationList.declarations[0];
         if (ts.isIdentifier(declaration.name)) {
           exportType = "const";
           name = declaration.name.text;
-          visibility = getVisibility(node);
+          visibility = getVisibility(node) as TreeNode["visibility"];
         }
       }
 
       const shouldInclude = isVisibleEnough(visibility);
 
       if (name && shouldInclude) {
-        const visibilityPrefix =
-          visibility !== "public" ? `${visibility} ` : "";
-        output += `└─ ${isDefault ? "export default " : ""}${visibilityPrefix}${exportType} ${name}`;
+        const treeNode: TreeNode = {
+          name,
+          type: exportType,
+          visibility,
+        };
 
         if (ts.isClassDeclaration(node)) {
-          output += "\n";
-          node.members.forEach((member) => {
-            if (
-              ts.isMethodDeclaration(member) ||
-              ts.isConstructorDeclaration(member)
-            ) {
-              const methodName = ts.isConstructorDeclaration(member)
-                ? "constructor"
-                : member.name.getText();
-              const memberVisibility = getVisibility(member);
-              if (isVisibleEnough(memberVisibility)) {
-                const memberVisibilityPrefix =
-                  memberVisibility !== "public" ? `${memberVisibility} ` : "";
-                output += `   ├─ ${memberVisibilityPrefix}${methodName}${getMethodSignature(member)}\n`;
-              }
-            }
-          });
+          treeNode.children = node.members
+            .filter(
+              (member) =>
+                (ts.isMethodDeclaration(member) ||
+                  ts.isConstructorDeclaration(member) ||
+                  ts.isPropertyDeclaration(member)) &&
+                isVisibleEnough(getVisibility(member)),
+            )
+            .map(
+              (member): TreeNode => ({
+                name: ts.isConstructorDeclaration(member)
+                  ? "constructor"
+                  : ts.isPropertyDeclaration(member)
+                    ? member.name.getText()
+                    : (member.name as ts.Identifier).text,
+                type:
+                  ts.isMethodDeclaration(member) ||
+                  ts.isConstructorDeclaration(member)
+                    ? "method"
+                    : "property",
+                visibility: getVisibility(member) as TreeNode["visibility"],
+                signature:
+                  ts.isMethodDeclaration(member) ||
+                  ts.isConstructorDeclaration(member)
+                    ? getMethodSignature(
+                        member as
+                          | ts.MethodDeclaration
+                          | ts.ConstructorDeclaration,
+                      )
+                    : undefined,
+              }),
+            );
         } else if (ts.isFunctionDeclaration(node)) {
           const signature = typeChecker.getSignatureFromDeclaration(node);
           if (signature) {
-            const parameters = signature
+            treeNode.signature = `(${signature
               .getParameters()
               .map(
                 (param) =>
                   `${param.getName()}: ${typeChecker.typeToString(typeChecker.getTypeOfSymbolAtLocation(param, param.valueDeclaration!))}`,
               )
-              .join(", ");
-            const returnType = typeChecker.typeToString(
-              signature.getReturnType(),
-            );
-            output += `(${parameters}): ${returnType}`;
+              .join(
+                ", ",
+              )}): ${typeChecker.typeToString(signature.getReturnType())}`;
           }
         }
-        output += "\n";
+
+        nodes.push(treeNode);
       }
     }
   });
 
-  return output;
+  return nodes;
 }
 
 function traverseDirectory(
   dir: string,
   program: ts.Program,
-  shouldIgnore: (path: string) => boolean,
+  pathFilter: (path: string) => boolean,
   visibilityLevel: VisibilityLevel,
-  prefix = "",
-): string {
-  let output = "";
+): TreeNode {
+  const rootNode: TreeNode = {
+    name: path.basename(dir) + "/",
+    type: "directory",
+    children: [],
+  };
   const entries = fs.readdirSync(dir, { withFileTypes: true });
 
   const relevantEntries = entries.filter((entry) => {
     const fullPath = path.join(dir, entry.name);
     return (
-      !shouldIgnore(fullPath) &&
+      pathFilter(fullPath) &&
       (entry.isDirectory() || (entry.isFile() && entry.name.endsWith(".ts")))
     );
   });
 
-  relevantEntries.forEach((entry, index) => {
+  relevantEntries.forEach((entry) => {
     const fullPath = path.join(dir, entry.name);
-    const isLast = index === relevantEntries.length - 1;
-    const newPrefix = prefix + (isLast ? "└─ " : "├─ ");
-    const continuationPrefix = prefix + (isLast ? "   " : "│  ");
 
     if (entry.isDirectory()) {
-      const subDirContent = traverseDirectory(
+      const subDirNode = traverseDirectory(
         fullPath,
         program,
-        shouldIgnore,
+        pathFilter,
         visibilityLevel,
-        continuationPrefix,
       );
-      if (subDirContent.trim()) {
-        output += `${newPrefix}${entry.name}/\n${subDirContent}`;
+      if (subDirNode.children && subDirNode.children.length > 0) {
+        rootNode.children!.push(subDirNode);
       }
     } else if (entry.isFile() && entry.name.endsWith(".ts")) {
-      output += `${newPrefix}${entry.name}\n`;
+      const fileNode: TreeNode = {
+        name: entry.name,
+        type: "file",
+        children: [],
+      };
       const sourceFile = program.getSourceFile(fullPath);
       if (sourceFile) {
-        const fileContent = analyzeFile(
+        fileNode.children = analyzeFile(
           sourceFile,
           program.getTypeChecker(),
           visibilityLevel,
         );
-        if (fileContent.trim()) {
-          output +=
-            fileContent
-              .split("\n")
-              .filter((line) => line.trim())
-              .map((line) => continuationPrefix + line)
-              .join("\n") + "\n";
-        }
+      }
+      if (fileNode.children && fileNode.children.length > 0) {
+        rootNode.children!.push(fileNode);
       }
     }
   });
 
-  return output;
-}
-
-// Function to check if a path should be ignored
-function shouldIgnore(
-  ignoredPatterns: (string | RegExp)[],
-  pathToCheck: string,
-): boolean {
-  const relativePath = path.relative(process.cwd(), pathToCheck);
-  return ignoredPatterns.some((pattern) => {
-    // console.log(pattern, relativePath);
-    if (typeof pattern === "string") {
-      return relativePath.includes(pattern);
-    }
-    return pattern.test(relativePath);
-  });
+  return rootNode;
 }
 
 export function tree(
   rootDir: string = process.cwd(),
-  ignored: (string | RegExp)[] = ignoredPatterns,
+  pathFilter: (path: string) => boolean = () => true,
   visibilityLevel: VisibilityLevel = VisibilityLevel.Public,
-) {
+): TreeNode {
   const program = createProgram(rootDir);
-  const output = traverseDirectory(
-    rootDir,
-    program,
-    shouldIgnore.bind(null, ignored),
-    visibilityLevel,
-  );
-  console.log(output);
+  return traverseDirectory(rootDir, program, pathFilter, visibilityLevel);
 }

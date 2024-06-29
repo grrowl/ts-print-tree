@@ -1,27 +1,57 @@
 import { jest, describe, expect, test } from "@jest/globals";
-import { ignoredPatterns, tree, VisibilityLevel } from ".";
+import { tree, VisibilityLevel } from ".";
+import { formatAsList, formatAsTree, pathFilter } from "./cli";
 
-describe("tree module", () => {
-  test("calls tree() and matches console.log snapshot", () => {
-    console.log = jest.fn();
+const ignoredPatterns = [
+  "node_modules",
+  /\.git/,
+  /\.vscode/,
+  /\.DS_Store/,
+  /\.test\.ts$/,
+  /\.spec\.ts$/,
+];
 
-    tree();
-    expect((console.log as jest.Mock).mock.calls).toMatchSnapshot();
+describe("cli module", () => {
+  test("calls tree() and formats as tree", () => {
+    const result = tree();
+    const formattedResult = formatAsTree(result);
+    expect(formattedResult).toMatchSnapshot();
   });
 
-  test("calls tree() with custom ignored patterns and matches console.log snapshot", () => {
-    console.log = jest.fn();
-    const customIgnored = ["node_modules", /\.git/, /^src\/(?!tests)/];
-
-    tree(process.cwd(), customIgnored);
-    expect((console.log as jest.Mock).mock.calls).toMatchSnapshot();
-  });
-
-  test("calls tree() with custom visibility level and matches console.log snapshot", () => {
-    console.log = jest.fn();
+  test("calls tree() and formats as list, with custom visibility level", () => {
     const customVisibilityLevel = VisibilityLevel.Private;
 
-    tree(process.cwd(), ignoredPatterns, customVisibilityLevel);
-    expect((console.log as jest.Mock).mock.calls).toMatchSnapshot();
+    const result = tree(
+      process.cwd(),
+      pathFilter(ignoredPatterns),
+      customVisibilityLevel,
+    );
+    const formattedResult = formatAsList(result);
+    expect(formattedResult).toMatchSnapshot();
+  });
+});
+
+describe("tree module", () => {
+  test("calls tree() and matches result snapshot", () => {
+    const result = tree();
+    expect(result).toMatchSnapshot();
+  });
+
+  test("calls tree() with custom ignored patterns and matches result snapshot", () => {
+    const customIgnored = ["node_modules", /\.git/, /^src\/(?!tests)/];
+
+    const result = tree(process.cwd(), pathFilter(customIgnored));
+    expect(result).toMatchSnapshot();
+  });
+
+  test("calls tree() with custom visibility level and matches result snapshot", () => {
+    const customVisibilityLevel = VisibilityLevel.Private;
+
+    const result = tree(
+      process.cwd(),
+      pathFilter(ignoredPatterns),
+      customVisibilityLevel,
+    );
+    expect(result).toMatchSnapshot();
   });
 });

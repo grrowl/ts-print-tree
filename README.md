@@ -42,37 +42,46 @@ The tool will output a tree-like structure of your project, including files, dir
 ## 📋 Example Output
 
 ```
-├─ src/
-│  ├─ index.ts
-│  │  └─ main(): void
-│  ├─ utils/
-│  │  └─ helper.ts
-│  │     └─ formatDate(date: Date): string
+ts-print-tree/
+├── src/
+│   ├── index.ts
+│   │   └── function main(): void
+│   └── utils/
+│       └── helper.ts
+│           └── function formatDate(date: Date): string
 ```
 
 More comprehensive example output can be found in the [test snapshots for this very project](https://github.com/grrowl/ts-print-tree/blob/main/src/__snapshots__/index.test.ts.snap).
 
 ## 🔧 Customization
 
-You can customize ignored patterns by passing them as arguments to the CLI command. For example:
+You can customize ignored patterns and output format by passing arguments to the CLI command. For example:
 
 ```
-npx ts-print-tree -- --ignore "__snapshots__"  --ignore "/\\.(test|spec)\\.ts$/"
+npx ts-print-tree -- --ignore "docs" --ignore "/\\.(test|spec)\\.ts$/" --list --private
 ```
 
-This will ignore files and directories of __snapshots__ or ending with `.test.ts` or `.spec.ts`.
+This will ignore files and directories of docs or ending with `.test.ts` or `.spec.ts`, include private members, and output in list format.
 
-You can also set your project directory with the `--cwd` option:
+Run `npx ts-print-tree -- --help` to see all available options.
 
+## 🧰 Programmatic Usage
+
+You can also use ts-print-tree programmatically in your TypeScript projects:
+
+```typescript
+import { generateProjectStructure, VisibilityLevel } from 'ts-print-tree';
+
+const projectStructure = generateProjectStructure(
+  process.cwd(),
+  (path) => !path.includes('node_modules'),
+  VisibilityLevel.Public
+);
+
+console.log(JSON.stringify(projectStructure, null, 2));
 ```
-npx ts-print-tree -- --cwd ./my-project
-```
 
-By default, only public members are shown. You can include protected and private members using the `--protected` and `--private` flags, respectively:
-
- ```
-npx ts-print-tree -- --private
-```
+This will give you a structured representation of your project that you can further process or format as needed.
 
 ## 📚 Contributing
 
@@ -88,8 +97,3 @@ This project is licensed under the ISC License - see the LICENSE file for detail
 - All the open-source contributors who inspire projects like this
 
 Happy exploring! 🕵️‍♀️🌟
-<!--
-```
-
-This revised README focuses on the CLI usage of `ts-print-tree`, removes mention of the programmatic API, updates the license to ISC, and adjusts the example output as requested. It also includes information about running with both `npx` and `bunx`.
--->
