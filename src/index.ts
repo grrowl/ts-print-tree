@@ -73,17 +73,33 @@ function analyzeFile(
     return `(${parameters}): ${returnType}`;
   }
 
-  function getVisibility(node: ts.Declaration | ts.VariableStatement): string {
-    if (ts.isVariableStatement(node)) {
-      return node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
-        ? "public"
-        : "private";
+  function getVisibility(node: ts.Node): string {
+    if (ts.isClassElement(node)) {
+      if (node.modifiers) {
+        if (node.modifiers.some((m) => m.kind === ts.SyntaxKind.PrivateKeyword))
+          return "private";
+        if (
+          node.modifiers.some((m) => m.kind === ts.SyntaxKind.ProtectedKeyword)
+        )
+          return "protected";
+      }
+      return "public"; // Class members are public by default if not explicitly marked
     }
-    const modifiers = ts.getCombinedModifierFlags(node);
-    if (modifiers & ts.ModifierFlags.Private) return "private";
-    if (modifiers & ts.ModifierFlags.Protected) return "protected";
-    if (modifiers & ts.ModifierFlags.Export) return "public";
-    return "private"; // Non-exported top-level declarations are considered private
+
+    if (
+      ts.isVariableStatement(node) ||
+      ts.isFunctionDeclaration(node) ||
+      ts.isClassDeclaration(node) ||
+      ts.isInterfaceDeclaration(node)
+    ) {
+      if (node.modifiers) {
+        if (node.modifiers.some((m) => m.kind === ts.SyntaxKind.ExportKeyword))
+          return "public";
+      }
+      return "private"; // Non-exported top-level declarations are considered private
+    }
+
+    return "private"; // Default to private if we can't determine visibility
   }
 
   function isVisibleEnough(visibility: string): boolean {
