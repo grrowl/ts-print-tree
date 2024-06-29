@@ -55,7 +55,7 @@ The tool will output a tree-like structure of your project, including files, dir
 You can customize ignored patterns by passing them as arguments to the CLI command. For example:
 
 ```
-npx ts-print-tree --ignore "__snapshots__"  --ignore "/\\.(test|spec)\\.ts$/"
+npx ts-print-tree -- --ignore "__snapshots__"  --ignore "/\\.(test|spec)\\.ts$/"
 ```
 
 This will ignore files and directories of __snapshots__ or ending with `.test.ts` or `.spec.ts`.
@@ -63,7 +63,13 @@ This will ignore files and directories of __snapshots__ or ending with `.test.ts
 You can also set your project directory with the `--cwd` option:
 
 ```
-npx ts-print-tree --cwd ./my-project
+npx ts-print-tree -- --cwd ./my-project
+```
+
+By default, only public members are shown. You can include protected and private members using the `--protected` and `--private` flags, respectively:
+
+ ```
+npx ts-print-tree -- --private
 ```
 
 ## 📚 Contributing

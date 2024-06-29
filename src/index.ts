@@ -66,20 +66,25 @@ function analyzeFile(
     return `(${parameters}): ${returnType}`;
   }
 
-  function getVisibility(node: ts.Declaration): string {
+  function getVisibility(node: ts.Declaration | ts.VariableStatement): string {
+    if (ts.isVariableStatement(node)) {
+      return node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
+        ? "public"
+        : "private";
+    }
     const modifiers = ts.getCombinedModifierFlags(node);
     if (modifiers & ts.ModifierFlags.Private) return "private";
     if (modifiers & ts.ModifierFlags.Protected) return "protected";
-    return "public";
+    if (modifiers & ts.ModifierFlags.Export) return "public";
+    return "private"; // Non-exported top-level declarations are considered private
   }
 
-  function isVisibleEnough(node: ts.Declaration): boolean {
-    const nodeVisibility = getVisibility(node);
+  function isVisibleEnough(visibility: string): boolean {
     switch (visibilityLevel) {
       case VisibilityLevel.Public:
-        return nodeVisibility === "public";
+        return visibility === "public";
       case VisibilityLevel.Protected:
-        return nodeVisibility === "public" || nodeVisibility === "protected";
+        return visibility === "public" || visibility === "protected";
       case VisibilityLevel.Private:
         return true;
     }
@@ -93,10 +98,10 @@ function analyzeFile(
       ts.isClassDeclaration(node) ||
       ts.isVariableStatement(node)
     ) {
-      let exportType = "export";
+      let exportType = "";
       let name = "";
       let isDefault = false;
-      let visibility = "public";
+      let visibility = "private";
 
       if (
         ts.isFunctionDeclaration(node) ||
@@ -118,17 +123,11 @@ function analyzeFile(
         if (ts.isIdentifier(declaration.name)) {
           exportType = "const";
           name = declaration.name.text;
-          visibility = node.modifiers?.some(
-            (m) => m.kind === ts.SyntaxKind.ExportKeyword,
-          )
-            ? "public"
-            : "private";
+          visibility = getVisibility(node);
         }
       }
 
-      const shouldInclude = ts.isVariableStatement(node)
-        ? visibilityLevel === VisibilityLevel.Private || visibility === "public"
-        : isVisibleEnough(node as ts.Declaration);
+      const shouldInclude = isVisibleEnough(visibility);
 
       if (name && shouldInclude) {
         const visibilityPrefix =
@@ -139,17 +138,18 @@ function analyzeFile(
           output += "\n";
           node.members.forEach((member) => {
             if (
-              (ts.isMethodDeclaration(member) ||
-                ts.isConstructorDeclaration(member)) &&
-              isVisibleEnough(member)
+              ts.isMethodDeclaration(member) ||
+              ts.isConstructorDeclaration(member)
             ) {
               const methodName = ts.isConstructorDeclaration(member)
                 ? "constructor"
                 : member.name.getText();
               const memberVisibility = getVisibility(member);
-              const memberVisibilityPrefix =
-                memberVisibility !== "public" ? `${memberVisibility} ` : "";
-              output += `   ├─ ${memberVisibilityPrefix}${methodName}${getMethodSignature(member)}\n`;
+              if (isVisibleEnough(memberVisibility)) {
+                const memberVisibilityPrefix =
+                  memberVisibility !== "public" ? `${memberVisibility} ` : "";
+                output += `   ├─ ${memberVisibilityPrefix}${methodName}${getMethodSignature(member)}\n`;
+              }
             }
           });
         } else if (ts.isFunctionDeclaration(node)) {
