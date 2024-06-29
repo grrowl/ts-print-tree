@@ -60,6 +60,12 @@ npx ts-print-tree --ignore "__snapshots__"  --ignore "/\\.(test|spec)\\.ts$/"
 
 This will ignore files and directories of __snapshots__ or ending with `.test.ts` or `.spec.ts`.
 
+You can also set your project directory with the `--cwd` option:
+
+```
+npx ts-print-tree --cwd ./my-project
+```
+
 ## 📚 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.

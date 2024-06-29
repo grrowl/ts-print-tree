@@ -12,6 +12,7 @@ if (args.includes("--help")) {
   console.log("--version    Show version number");
   console.log("--ignore     Ignore files matching the specified patterns");
   console.log("--no-default Don't include default ignore patterns");
+  console.log("--cwd        Set the current working directory");
 } else if (args.includes("--version")) {
   const packageJson = JSON.parse(
     readFileSync(join(__dirname, "../package.json"), "utf-8"),
@@ -20,6 +21,7 @@ if (args.includes("--help")) {
 } else {
   const ignoreIndex = args.indexOf("--ignore");
   let ignorePatterns: (string | RegExp)[] = [];
+  let cwd = process.cwd();
 
   if (ignoreIndex !== -1) {
     ignorePatterns = args
@@ -38,6 +40,10 @@ if (args.includes("--help")) {
     ignorePatterns.push(...ignoredPatterns);
   }
 
-  console.log(ignorePatterns);
-  tree(process.cwd(), ignorePatterns);
+  const cwdIndex = args.indexOf("--cwd");
+  if (cwdIndex !== -1 && args[cwdIndex + 1]) {
+    cwd = args[cwdIndex + 1];
+  }
+
+  tree(cwd, ignorePatterns);
 }
