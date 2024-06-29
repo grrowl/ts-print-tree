@@ -24,7 +24,16 @@ exports[`tree module calls tree() and matches console.log snapshot 1`] = `
 exports[`tree module calls tree() with custom ignored patterns and matches console.log snapshot 1`] = `
 [
   [
-    "",
+    "└─ src/
+   └─ tests/
+      ├─ class.ts
+      │  └─ export default class DefaultClass
+      │  └─ class NamedClass
+      └─ consts.ts
+         └─ const publicArray
+         └─ interface PublicInterface
+         └─ const publicFunction
+",
   ],
 ]
 `;

@@ -50,6 +50,8 @@ The tool will output a tree-like structure of your project, including files, dir
 │  │     └─ formatDate(date: Date): string
 ```
 
+More comprehensive example output can be found in the [test snapshots for this very project](https://github.com/grrowl/ts-print-tree/blob/main/src/__snapshots__/index.test.ts.snap).
+
 ## 🔧 Customization
 
 You can customize ignored patterns by passing them as arguments to the CLI command. For example:

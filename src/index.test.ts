@@ -11,7 +11,7 @@ describe("tree module", () => {
 
   test("calls tree() with custom ignored patterns and matches console.log snapshot", () => {
     console.log = jest.fn();
-    const customIgnored = ["node_modules", /\.git/, /^src\/(?!tests\/)/];
+    const customIgnored = ["node_modules", /\.git/, /^src\/(?!tests)/];
 
     tree(process.cwd(), customIgnored);
     expect((console.log as jest.Mock).mock.calls).toMatchSnapshot();
