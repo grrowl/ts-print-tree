@@ -70,9 +70,9 @@ Run `npx ts-print-tree -- --help` to see all available options.
 You can also use ts-print-tree programmatically in your TypeScript projects:
 
 ```typescript
-import { generateProjectStructure, VisibilityLevel } from 'ts-print-tree';
+import { tree, VisibilityLevel } from 'ts-print-tree';
 
-const projectStructure = generateProjectStructure(
+const projectStructure = tree(
   process.cwd(),
   (path) => !path.includes('node_modules'),
   VisibilityLevel.Public
@@ -89,7 +89,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-This project is licensed under the ISC License - see the LICENSE file for details.
+This project is licensed under the ISC License - I hope you find it useful!
 
 ## 🙏 Acknowledgments
 
