@@ -43,12 +43,19 @@ export const pathFilter =
 
 function formatNodeName(node: TreeNode): string {
   const visibilityPrefix =
-    node.visibility && node.visibility !== "public"
+    node.visibility && node.visibility !== VisibilityLevel.Public
       ? `${node.visibility} `
       : "";
-  const typePrefix =
-    node.type !== "directory" && node.type !== "file" ? `${node.type} ` : "";
-  return `${visibilityPrefix}${typePrefix}${node.name}`;
+
+  if (node.type === "directory" || node.type === "file") {
+    return `${node.name}`;
+  } else if (node.type === "method" || node.type === "function") {
+    return `${visibilityPrefix}${node.type} ${node.name}${node.signature ? node.signature : ""}`;
+  } else if (node.type === "class") {
+    return `${visibilityPrefix}${node.type} ${node.name}`;
+  } else {
+    return `${visibilityPrefix}${node.type} ${node.name}: ${node.signature ? node.signature : ""}`;
+  }
 }
 
 export function formatAsTree(
@@ -60,7 +67,7 @@ export function formatAsTree(
   const formattedName = formatNodeName(node);
   let output = isRoot
     ? `${formattedName}${node.signature ? node.signature : ""}\n`
-    : `${prefix}${isLast ? "└── " : "├── "}${formattedName}${node.signature ? node.signature : ""}\n`;
+    : `${prefix}${isLast ? "└── " : "├── "}${formattedName}\n`;
 
   if (node.children) {
     node.children.forEach((child, index) => {
@@ -74,7 +81,7 @@ export function formatAsTree(
 
 export function formatAsList(node: TreeNode, depth = 0): string {
   const formattedName = formatNodeName(node);
-  let output = `${"  ".repeat(depth)}${depth === 0 ? "" : "- "}${formattedName}${node.signature ? node.signature : ""}\n`;
+  let output = `${"  ".repeat(depth)}${depth === 0 ? "" : "- "}${formattedName}\n`;
   if (node.children) {
     node.children.forEach((child) => {
       output += formatAsList(child, depth + 1);

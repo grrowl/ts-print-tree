@@ -3,87 +3,90 @@
 exports[`cli module call with arguments: ['--list', '--private'] 1`] = `
 [
   [
-    {
-      "args": [],
-    },
-  ],
-  [
     "ts-print-tree/
 └── src/
     ├── cli.ts
-    │   ├── const pathFilter
-    │   ├── function formatAsTree(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string
-    │   └── function formatAsList(node: TreeNode, depth: number): string
+    │   ├── private function printHelp(): void
+    │   ├── private function printVersion(): void
+    │   ├── const pathFilter: (ignorePatterns: (string | RegExp)[]) => (path: string) => boolean
+    │   ├── const pathFilter: (ignorePatterns: (string | RegExp)[]) => (path: string) => boolean
+    │   ├── private function formatNodeName(node: TreeNode): string
+    │   ├── function formatAsTree(node: TreeNode, prefix?: string, isLast?: boolean, isRoot?: boolean): string
+    │   └── function formatAsList(node: TreeNode, depth?: number): string
     ├── index.ts
-    │   ├── interface TreeNode
-    │   └── function tree(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+    │   ├── interface TreeNode: interface
+    │   ├── private function readTsConfig(rootDir: string): ParsedCommandLine
+    │   ├── private function createProgram(rootDir: string): Program
+    │   ├── private function analyzeFile(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): TreeNode[]
+    │   ├── private function traverseDirectory(dir: string, program: Program, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+    │   └── function tree(rootDir?: string, pathFilter?: (path: string) => boolean, visibilityLevel?: VisibilityLevel): TreeNode
     └── tests/
         ├── class.ts
         │   ├── class DefaultClass
-        │   │   ├── property foo
-        │   │   ├── property bar
-        │   │   └── method constructor(baz: number[]): void
-        │   └── class NamedClass
-        │       ├── method constructor(): void
-        │       ├── method double(): void
-        │       └── method octuple(): void
+        │   │   ├── property foo: string
+        │   │   ├── property bar: string[]
+        │   │   └── method constructor(baz: number[]): DefaultClass
+        │   ├── class NamedClass
+        │   │   ├── method get version(): number
+        │   │   ├── method constructor(): NamedClass
+        │   │   ├── method double(): void
+        │   │   └── method octuple(): void
+        │   ├── const DefaultClass: typeof DefaultClass
+        │   └── const DefaultClass: typeof DefaultClass
         ├── consts.ts
-        │   ├── const publicArray
-        │   ├── interface PublicInterface
-        │   └── const publicFunction
+        │   ├── const publicArray: string[]
+        │   ├── const publicArray: string[]
+        │   ├── interface PublicInterface: interface
+        │   ├── const publicFunction: (input: number) => string
+        │   └── const publicFunction: (input: number) => string
+        ├── default-const.ts
+        │   └── const default: "🌳"
         └── default-function.ts
             └── function <anonymous>(a: number, b: number): string
 ",
   ],
   [
-    {
-      "args": [
-        "--list",
-        "--private",
-      ],
-    },
-  ],
-  [
     "ts-print-tree/
   - src/
     - cli.ts
-      - private const args
-      - private const defaultIgnore
       - private function printHelp(): void
       - private function printVersion(): void
-      - const pathFilter
+      - const pathFilter: (ignorePatterns: (string | RegExp)[]) => (path: string) => boolean
+      - const pathFilter: (ignorePatterns: (string | RegExp)[]) => (path: string) => boolean
       - private function formatNodeName(node: TreeNode): string
-      - function formatAsTree(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string
-      - function formatAsList(node: TreeNode, depth: number): string
+      - function formatAsTree(node: TreeNode, prefix?: string, isLast?: boolean, isRoot?: boolean): string
+      - function formatAsList(node: TreeNode, depth?: number): string
     - index.ts
-      - interface TreeNode
+      - interface TreeNode: interface
       - private function readTsConfig(rootDir: string): ParsedCommandLine
       - private function createProgram(rootDir: string): Program
       - private function analyzeFile(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): TreeNode[]
       - private function traverseDirectory(dir: string, program: Program, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
-      - function tree(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+      - function tree(rootDir?: string, pathFilter?: (path: string) => boolean, visibilityLevel?: VisibilityLevel): TreeNode
     - tests/
       - class.ts
-        - private const tree
         - class DefaultClass
-          - property foo
-          - property bar
-          - method constructor(baz: number[]): void
+          - property foo: string
+          - property bar: string[]
+          - method constructor(baz: number[]): DefaultClass
         - class NamedClass
-          - private property version
-          - method constructor(): void
+          - private property version: number
+          - method get version(): number
+          - method constructor(): NamedClass
           - method double(): void
           - private method triple(): void
           - protected method quadruple(): void
           - method octuple(): void
+        - const DefaultClass: typeof DefaultClass
+        - const DefaultClass: typeof DefaultClass
       - consts.ts
-        - private const privateString
-        - private const privateNumber
-        - private const privateBoolean
-        - const publicArray
-        - interface PublicInterface
-        - private const privateFunction
-        - const publicFunction
+        - const publicArray: string[]
+        - const publicArray: string[]
+        - interface PublicInterface: interface
+        - const publicFunction: (input: number) => string
+        - const publicFunction: (input: number) => string
+      - default-const.ts
+        - const default: "🌳"
       - default-function.ts
         - function <anonymous>(a: number, b: number): string
 ",
@@ -94,34 +97,44 @@ exports[`cli module call with arguments: ['--list', '--private'] 1`] = `
 exports[`cli module call with no arguments 1`] = `
 [
   [
-    {
-      "args": [],
-    },
-  ],
-  [
     "ts-print-tree/
 └── src/
     ├── cli.ts
-    │   ├── const pathFilter
-    │   ├── function formatAsTree(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string
-    │   └── function formatAsList(node: TreeNode, depth: number): string
+    │   ├── private function printHelp(): void
+    │   ├── private function printVersion(): void
+    │   ├── const pathFilter: (ignorePatterns: (string | RegExp)[]) => (path: string) => boolean
+    │   ├── const pathFilter: (ignorePatterns: (string | RegExp)[]) => (path: string) => boolean
+    │   ├── private function formatNodeName(node: TreeNode): string
+    │   ├── function formatAsTree(node: TreeNode, prefix?: string, isLast?: boolean, isRoot?: boolean): string
+    │   └── function formatAsList(node: TreeNode, depth?: number): string
     ├── index.ts
-    │   ├── interface TreeNode
-    │   └── function tree(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+    │   ├── interface TreeNode: interface
+    │   ├── private function readTsConfig(rootDir: string): ParsedCommandLine
+    │   ├── private function createProgram(rootDir: string): Program
+    │   ├── private function analyzeFile(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): TreeNode[]
+    │   ├── private function traverseDirectory(dir: string, program: Program, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+    │   └── function tree(rootDir?: string, pathFilter?: (path: string) => boolean, visibilityLevel?: VisibilityLevel): TreeNode
     └── tests/
         ├── class.ts
         │   ├── class DefaultClass
-        │   │   ├── property foo
-        │   │   ├── property bar
-        │   │   └── method constructor(baz: number[]): void
-        │   └── class NamedClass
-        │       ├── method constructor(): void
-        │       ├── method double(): void
-        │       └── method octuple(): void
+        │   │   ├── property foo: string
+        │   │   ├── property bar: string[]
+        │   │   └── method constructor(baz: number[]): DefaultClass
+        │   ├── class NamedClass
+        │   │   ├── method get version(): number
+        │   │   ├── method constructor(): NamedClass
+        │   │   ├── method double(): void
+        │   │   └── method octuple(): void
+        │   ├── const DefaultClass: typeof DefaultClass
+        │   └── const DefaultClass: typeof DefaultClass
         ├── consts.ts
-        │   ├── const publicArray
-        │   ├── interface PublicInterface
-        │   └── const publicFunction
+        │   ├── const publicArray: string[]
+        │   ├── const publicArray: string[]
+        │   ├── interface PublicInterface: interface
+        │   ├── const publicFunction: (input: number) => string
+        │   └── const publicFunction: (input: number) => string
+        ├── default-const.ts
+        │   └── const default: "🌳"
         └── default-function.ts
             └── function <anonymous>(a: number, b: number): string
 ",
