@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cli module call with arguments: ['--list', '--private'] 1`] = `
+[
+  [
+    {
+      "args": [],
+    },
+  ],
+  [
+    "ts-print-tree/
+└── src/
+    ├── cli.ts
+    │   ├── const pathFilter
+    │   ├── function formatAsTree(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string
+    │   └── function formatAsList(node: TreeNode, depth: number): string
+    ├── index.ts
+    │   ├── interface TreeNode
+    │   └── function tree(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+    └── tests/
+        ├── class.ts
+        │   ├── class DefaultClass
+        │   │   ├── property foo
+        │   │   ├── property bar
+        │   │   └── method constructor(baz: number[]): void
+        │   └── class NamedClass
+        │       ├── method constructor(): void
+        │       ├── method double(): void
+        │       └── method octuple(): void
+        ├── consts.ts
+        │   ├── const publicArray
+        │   ├── interface PublicInterface
+        │   └── const publicFunction
+        └── default-function.ts
+            └── function <anonymous>(a: number, b: number): string
+",
+  ],
+  [
+    {
+      "args": [
+        "--list",
+        "--private",
+      ],
+    },
+  ],
+  [
+    "ts-print-tree/
+  - src/
+    - cli.ts
+      - private const args
+      - private const defaultIgnore
+      - private function printHelp(): void
+      - private function printVersion(): void
+      - const pathFilter
+      - private function formatNodeName(node: TreeNode): string
+      - function formatAsTree(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string
+      - function formatAsList(node: TreeNode, depth: number): string
+    - index.ts
+      - interface TreeNode
+      - private function readTsConfig(rootDir: string): ParsedCommandLine
+      - private function createProgram(rootDir: string): Program
+      - private function analyzeFile(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): TreeNode[]
+      - private function traverseDirectory(dir: string, program: Program, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+      - function tree(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+    - tests/
+      - class.ts
+        - private const tree
+        - class DefaultClass
+          - property foo
+          - property bar
+          - method constructor(baz: number[]): void
+        - class NamedClass
+          - private property version
+          - method constructor(): void
+          - method double(): void
+          - private method triple(): void
+          - protected method quadruple(): void
+          - method octuple(): void
+      - consts.ts
+        - private const privateString
+        - private const privateNumber
+        - private const privateBoolean
+        - const publicArray
+        - interface PublicInterface
+        - private const privateFunction
+        - const publicFunction
+      - default-function.ts
+        - function <anonymous>(a: number, b: number): string
+",
+  ],
+]
+`;
+
+exports[`cli module call with no arguments 1`] = `
+[
+  [
+    {
+      "args": [],
+    },
+  ],
+  [
+    "ts-print-tree/
+└── src/
+    ├── cli.ts
+    │   ├── const pathFilter
+    │   ├── function formatAsTree(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string
+    │   └── function formatAsList(node: TreeNode, depth: number): string
+    ├── index.ts
+    │   ├── interface TreeNode
+    │   └── function tree(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+    └── tests/
+        ├── class.ts
+        │   ├── class DefaultClass
+        │   │   ├── property foo
+        │   │   ├── property bar
+        │   │   └── method constructor(baz: number[]): void
+        │   └── class NamedClass
+        │       ├── method constructor(): void
+        │       ├── method double(): void
+        │       └── method octuple(): void
+        ├── consts.ts
+        │   ├── const publicArray
+        │   ├── interface PublicInterface
+        │   └── const publicFunction
+        └── default-function.ts
+            └── function <anonymous>(a: number, b: number): string
+",
+  ],
+]
+`;

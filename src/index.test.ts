@@ -11,26 +11,6 @@ const defaultIgnore = [
   /\.spec\.ts$/,
 ];
 
-describe("cli module", () => {
-  test("calls tree() and formats as tree", () => {
-    const result = tree(process.cwd(), pathFilter(defaultIgnore));
-    const formattedResult = formatAsTree(result);
-    expect(formattedResult).toMatchSnapshot();
-  });
-
-  test("calls tree() and formats as list, with custom visibility level", () => {
-    const customVisibilityLevel = VisibilityLevel.Private;
-
-    const result = tree(
-      process.cwd(),
-      pathFilter(defaultIgnore),
-      customVisibilityLevel,
-    );
-    const formattedResult = formatAsList(result);
-    expect(formattedResult).toMatchSnapshot();
-  });
-});
-
 describe("tree module", () => {
   test("calls tree() and matches result snapshot", () => {
     const result = tree();
