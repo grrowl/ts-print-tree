@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cli module call with arguments: ['--list', '--private'] 1`] = `
+[
+  [
+    "ts-print-tree/
+  - src/
+    - cli.ts
+      - private const args: string[]
+      - private const defaultIgnore: (string | RegExp)[]
+      - private function printHelp(): void
+      - private function printVersion(): void
+      - const pathFilter: (ignorePatterns: (string | RegExp)[]) => (path: string) => boolean
+      - private function formatNodeName(node: TreeNode): string
+      - function formatAsTree(node: TreeNode, prefix?: string, isLast?: boolean, isRoot?: boolean): string
+      - function formatAsList(node: TreeNode, depth?: number): string
+    - index.ts
+      - private const TS_FILE_MATCH: RegExp
+      - interface TreeNode
+      - private function readTsConfig(rootDir: string): ParsedCommandLine
+      - private function createProgram(rootDir: string): Program
+      - private function analyzeFile(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): TreeNode[]
+      - private function traverseDirectory(dir: string, program: Program, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode
+      - function tree(rootDir?: string, pathFilter?: (path: string) => boolean, visibilityLevel?: VisibilityLevel): TreeNode
+    - tests/
+      - class.ts
+        - private const tree: "🌳"
+        - class DefaultClass
+          - property static foo: string
+          - property bar: string[]
+          - method constructor(baz: number[]): DefaultClass
+        - class NamedClass extends DefaultClass
+          - private property static version: number
+          - method get version(): number
+          - method constructor(): NamedClass
+          - method double(): void
+          - private method triple(): void
+          - protected method quadruple(): void
+          - method octuple(): void
+        - const DefaultClass: typeof DefaultClass
+      - consts.ts
+        - private const privateString: string
+        - private const privateNumber: number
+        - private const privateBoolean: boolean
+        - const publicArray: string[]
+        - interface PublicInterface
+        - private const privateFunction: (input: string) => string
+        - const publicFunction: (input: number) => string
+      - default-const.ts
+        - const default: "🌳"
+      - default-function.ts
+        - function <anonymous>(a: number, b: number): string
+",
+  ],
+]
+`;
+
+exports[`cli module call with no arguments 1`] = `
+[
+  [
+    "ts-print-tree/
+└── src/
+    ├── cli.ts
+    │   ├── const pathFilter: (ignorePatterns: (string | RegExp)[]) => (path: string) => boolean
+    │   ├── function formatAsTree(node: TreeNode, prefix?: string, isLast?: boolean, isRoot?: boolean): string
+    │   └── function formatAsList(node: TreeNode, depth?: number): string
+    ├── index.ts
+    │   ├── interface TreeNode
+    │   └── function tree(rootDir?: string, pathFilter?: (path: string) => boolean, visibilityLevel?: VisibilityLevel): TreeNode
+    └── tests/
+        ├── class.ts
+        │   ├── class DefaultClass
+        │   │   ├── property static foo: string
+        │   │   ├── property bar: string[]
+        │   │   └── method constructor(baz: number[]): DefaultClass
+        │   ├── class NamedClass extends DefaultClass
+        │   │   ├── method get version(): number
+        │   │   ├── method constructor(): NamedClass
+        │   │   ├── method double(): void
+        │   │   └── method octuple(): void
+        │   └── const DefaultClass: typeof DefaultClass
+        ├── consts.ts
+        │   ├── const publicArray: string[]
+        │   ├── interface PublicInterface
+        │   └── const publicFunction: (input: number) => string
+        ├── default-const.ts
+        │   └── const default: "🌳"
+        └── default-function.ts
+            └── function <anonymous>(a: number, b: number): string
+",
+  ],
+]
+`;

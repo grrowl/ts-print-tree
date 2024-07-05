@@ -12,6 +12,10 @@ export default class DefaultClass {
 export class NamedClass extends DefaultClass {
   private static version: number = 1;
 
+  get version() {
+    return NamedClass.version;
+  }
+
   constructor() {
     super([1, 2, 3]);
   }
@@ -34,3 +38,5 @@ export class NamedClass extends DefaultClass {
     }
   }
 }
+
+export { DefaultClass };

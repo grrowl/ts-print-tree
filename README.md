@@ -61,7 +61,7 @@ You can customize ignored patterns and output format by passing arguments to the
 npx ts-print-tree -- --ignore "docs" --ignore "/\\.(test|spec)\\.ts$/" --list --private
 ```
 
-This will ignore files and directories of docs or ending with `.test.ts` or `.spec.ts`, include private members, and output in list format.
+This will ignore files and directories of docs or ending with `.test.ts` or `.spec.ts`, include private members, and output in list format (which is more efficient for LLM usage).
 
 Run `npx ts-print-tree -- --help` to see all available options.
 

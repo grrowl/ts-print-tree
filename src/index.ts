@@ -2,10 +2,12 @@ import * as ts from "typescript";
 import * as path from "path";
 import * as fs from "fs";
 
+const TS_FILE_MATCH = /\.tsx?$/;
+
 export enum VisibilityLevel {
-  Public = 1,
-  Protected = 2,
-  Private = 3,
+  Public = "public",
+  Protected = "protected",
+  Private = "private",
 }
 
 export interface TreeNode {
@@ -19,9 +21,11 @@ export interface TreeNode {
     | "property"
     | "interface"
     | "const";
-  visibility?: "public" | "protected" | "private";
+  visibility?: VisibilityLevel;
   signature?: string;
   children?: TreeNode[];
+  isDefault?: boolean;
+  superclass?: string;
 }
 
 function readTsConfig(rootDir: string): ts.ParsedCommandLine {
@@ -58,156 +62,270 @@ function analyzeFile(
 ): TreeNode[] {
   const nodes: TreeNode[] = [];
 
-  function getMethodSignature(
-    method: ts.MethodDeclaration | ts.ConstructorDeclaration,
-  ): string {
-    const parameters = method.parameters
-      .map(
-        (param) =>
-          `${param.name.getText()}: ${typeChecker.typeToString(typeChecker.getTypeAtLocation(param))}`,
-      )
-      .join(", ");
-    const returnType = method.type
-      ? typeChecker.typeToString(typeChecker.getTypeAtLocation(method))
-      : "void";
-    return `(${parameters}): ${returnType}`;
+  function getMethodSignature(node: ts.Node): string {
+    if (ts.isFunctionLike(node)) {
+      const signature = typeChecker.getSignatureFromDeclaration(node);
+      if (signature) {
+        return typeChecker.signatureToString(signature);
+      }
+    }
+    return typeChecker.typeToString(typeChecker.getTypeAtLocation(node));
   }
 
-  function getVisibility(node: ts.Node): string {
-    if (ts.isClassElement(node)) {
-      if (node.modifiers) {
-        if (node.modifiers.some((m) => m.kind === ts.SyntaxKind.PrivateKeyword))
-          return "private";
-        if (
-          node.modifiers.some((m) => m.kind === ts.SyntaxKind.ProtectedKeyword)
-        )
-          return "protected";
-      }
-      return "public"; // Class members are public by default if not explicitly marked
-    }
-
-    if (
-      ts.isVariableStatement(node) ||
-      ts.isFunctionDeclaration(node) ||
-      ts.isClassDeclaration(node) ||
-      ts.isInterfaceDeclaration(node)
-    ) {
-      if (node.modifiers) {
-        if (node.modifiers.some((m) => m.kind === ts.SyntaxKind.ExportKeyword))
-          return "public";
-      }
-      return "private"; // Non-exported top-level declarations are considered private
-    }
-
-    return "private"; // Default to private if we can't determine visibility
-  }
-
-  function isVisibleEnough(visibility: string): boolean {
+  function isVisibleEnough(visibility: VisibilityLevel): boolean {
     switch (visibilityLevel) {
       case VisibilityLevel.Public:
-        return visibility === "public";
+        return visibility === VisibilityLevel.Public;
       case VisibilityLevel.Protected:
-        return visibility === "public" || visibility === "protected";
+        return (
+          visibility === VisibilityLevel.Public ||
+          visibility === VisibilityLevel.Protected
+        );
       case VisibilityLevel.Private:
         return true;
     }
   }
 
-  ts.forEachChild(sourceFile, (node) => {
-    if (
-      ts.isExportDeclaration(node) ||
-      ts.isFunctionDeclaration(node) ||
-      ts.isInterfaceDeclaration(node) ||
-      ts.isClassDeclaration(node) ||
-      ts.isVariableStatement(node)
-    ) {
-      let exportType: TreeNode["type"] = "const";
-      let name = "";
-      let isDefault = false;
-      let visibility: TreeNode["visibility"] = "private";
-
-      if (
-        ts.isFunctionDeclaration(node) ||
-        ts.isClassDeclaration(node) ||
-        ts.isInterfaceDeclaration(node)
-      ) {
-        exportType = ts.isFunctionDeclaration(node)
-          ? "function"
-          : ts.isClassDeclaration(node)
-            ? "class"
-            : "interface";
-        name = node.name ? node.name.text : "<anonymous>";
-        isDefault = !!(
-          ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Default
-        );
-        visibility = getVisibility(node) as TreeNode["visibility"];
-      } else if (ts.isVariableStatement(node)) {
-        const declaration = node.declarationList.declarations[0];
-        if (ts.isIdentifier(declaration.name)) {
-          exportType = "const";
-          name = declaration.name.text;
-          visibility = getVisibility(node) as TreeNode["visibility"];
-        }
+  function getVisibility(node: ts.Node): VisibilityLevel {
+    // Check for explicit modifiers
+    if (ts.canHaveModifiers(node)) {
+      const modifiers = ts.getModifiers(node);
+      if (modifiers) {
+        if (modifiers.some((m) => m.kind === ts.SyntaxKind.PrivateKeyword))
+          return VisibilityLevel.Private;
+        if (modifiers.some((m) => m.kind === ts.SyntaxKind.ProtectedKeyword))
+          return VisibilityLevel.Protected;
+        if (modifiers.some((m) => m.kind === ts.SyntaxKind.PublicKeyword))
+          return VisibilityLevel.Public;
       }
+    }
 
-      const shouldInclude = isVisibleEnough(visibility);
+    // Check for exports
+    if (
+      ts.isExportAssignment(node) || // export default ...
+      ts.isExportDeclaration(node) || // export { ... } or export * from ...
+      (ts.isVariableStatement(node) &&
+        node.modifiers?.some(
+          (mod) => mod.kind === ts.SyntaxKind.ExportKeyword,
+        )) || // export const ...
+      (ts.isFunctionDeclaration(node) &&
+        node.modifiers?.some(
+          (mod) => mod.kind === ts.SyntaxKind.ExportKeyword,
+        )) || // export function ...
+      (ts.isClassDeclaration(node) &&
+        node.modifiers?.some(
+          (mod) => mod.kind === ts.SyntaxKind.ExportKeyword,
+        )) || // export class ...
+      (ts.isInterfaceDeclaration(node) &&
+        node.modifiers?.some(
+          (mod) => mod.kind === ts.SyntaxKind.ExportKeyword,
+        )) || // export interface ...
+      (ts.isTypeAliasDeclaration(node) &&
+        node.modifiers?.some((mod) => mod.kind === ts.SyntaxKind.ExportKeyword)) // export type ...
+    ) {
+      return VisibilityLevel.Public;
+    }
 
-      if (name && shouldInclude) {
-        const treeNode: TreeNode = {
+    // For class members, default to "public" if not explicitly marked
+    if (ts.isClassElement(node)) {
+      return VisibilityLevel.Public;
+    }
+
+    // Default to "private" for other non-exported declarations
+    return VisibilityLevel.Private;
+  }
+
+  function handleClassMembers(node: ts.ClassDeclaration): TreeNode[] {
+    return node.members
+      .filter(
+        (member): member is ts.ClassElement & { name?: ts.PropertyName } =>
+          (ts.isMethodDeclaration(member) ||
+            ts.isConstructorDeclaration(member) ||
+            ts.isPropertyDeclaration(member) ||
+            ts.isGetAccessor(member) ||
+            ts.isSetAccessor(member)) &&
+          isVisibleEnough(getVisibility(member)),
+      )
+      .map((member): TreeNode => {
+        const isStatic = member.modifiers?.some(
+          (mod) => mod.kind === ts.SyntaxKind.StaticKeyword,
+        );
+        const visibility = getVisibility(member);
+        let name = ts.isConstructorDeclaration(member)
+          ? "constructor"
+          : ts.isGetAccessor(member)
+            ? `get ${member.name.getText()}`
+            : ts.isSetAccessor(member)
+              ? `set ${member.name.getText()}`
+              : member.name?.getText() || "<anonymous>";
+
+        if (isStatic) {
+          name = `static ${name}`;
+        }
+
+        return {
           name,
-          type: exportType,
+          type:
+            ts.isMethodDeclaration(member) ||
+            ts.isConstructorDeclaration(member) ||
+            ts.isGetAccessor(member) ||
+            ts.isSetAccessor(member)
+              ? "method"
+              : "property",
           visibility,
+          signature: getMethodSignature(member),
         };
+      });
+  }
 
-        if (ts.isClassDeclaration(node)) {
-          treeNode.children = node.members
-            .filter(
-              (member) =>
-                (ts.isMethodDeclaration(member) ||
-                  ts.isConstructorDeclaration(member) ||
-                  ts.isPropertyDeclaration(member)) &&
-                isVisibleEnough(getVisibility(member)),
-            )
-            .map(
-              (member): TreeNode => ({
-                name: ts.isConstructorDeclaration(member)
-                  ? "constructor"
-                  : ts.isPropertyDeclaration(member)
-                    ? member.name.getText()
-                    : (member.name as ts.Identifier).text,
-                type:
-                  ts.isMethodDeclaration(member) ||
-                  ts.isConstructorDeclaration(member)
-                    ? "method"
-                    : "property",
-                visibility: getVisibility(member) as TreeNode["visibility"],
-                signature:
-                  ts.isMethodDeclaration(member) ||
-                  ts.isConstructorDeclaration(member)
-                    ? getMethodSignature(
-                        member as
-                          | ts.MethodDeclaration
-                          | ts.ConstructorDeclaration,
-                      )
-                    : undefined,
-              }),
-            );
-        } else if (ts.isFunctionDeclaration(node)) {
-          const signature = typeChecker.getSignatureFromDeclaration(node);
-          if (signature) {
-            treeNode.signature = `(${signature
-              .getParameters()
-              .map(
-                (param) =>
-                  `${param.getName()}: ${typeChecker.typeToString(typeChecker.getTypeOfSymbolAtLocation(param, param.valueDeclaration!))}`,
-              )
-              .join(
-                ", ",
-              )}): ${typeChecker.typeToString(signature.getReturnType())}`;
+  ts.forEachChild(sourceFile, (node) => {
+    let exportNode: TreeNode | null = null;
+
+    if (ts.isVariableStatement(node)) {
+      const isExport =
+        node.modifiers?.some(
+          (modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword,
+        ) ?? false;
+      const declarations = node.declarationList.declarations;
+      for (const declaration of declarations) {
+        if (ts.isIdentifier(declaration.name)) {
+          const name = declaration.name.text;
+          const visibility = isExport
+            ? VisibilityLevel.Public
+            : getVisibility(node);
+          if (isVisibleEnough(visibility)) {
+            const isDefault =
+              node.modifiers?.some(
+                (modifier) => modifier.kind === ts.SyntaxKind.DefaultKeyword,
+              ) ?? false;
+            const signature = getMethodSignature(declaration);
+            exportNode = {
+              name,
+              type: "const",
+              visibility,
+              isDefault,
+              signature,
+            };
+            nodes.push(exportNode);
           }
         }
+      }
+    } else if (ts.isClassDeclaration(node)) {
+      const name = node.name ? node.name.text : "<anonymous>";
+      const visibility = getVisibility(node);
 
-        nodes.push(treeNode);
+      if (isVisibleEnough(visibility)) {
+        let superclass: string | undefined;
+        if (node.heritageClauses) {
+          for (const clause of node.heritageClauses) {
+            if (
+              clause.token === ts.SyntaxKind.ExtendsKeyword &&
+              clause.types.length > 0
+            ) {
+              const superclassType = typeChecker.getTypeAtLocation(
+                clause.types[0],
+              );
+              superclass = typeChecker.typeToString(superclassType);
+              break;
+            }
+          }
+        }
+        exportNode = {
+          name,
+          type: "class",
+          visibility,
+          children: handleClassMembers(node),
+          superclass,
+        };
+        nodes.push(exportNode);
+      }
+    } else if (
+      ts.isInterfaceDeclaration(node) ||
+      ts.isFunctionDeclaration(node)
+    ) {
+      const name = node.name ? node.name.text : "<anonymous>";
+      const visibility = getVisibility(node);
+      if (isVisibleEnough(visibility)) {
+        const type = ts.isInterfaceDeclaration(node) ? "interface" : "function";
+        exportNode = {
+          name,
+          type,
+          visibility,
+          signature: type === "function" ? getMethodSignature(node) : undefined,
+        };
+        nodes.push(exportNode);
+      }
+    } else if (ts.isExportAssignment(node)) {
+      // Handle default exports
+      const name = "default";
+      const visibility = VisibilityLevel.Public;
+      let type: TreeNode["type"] = "const";
+      let signature: string | undefined;
+
+      if (ts.isIdentifier(node.expression)) {
+        const symbol = typeChecker.getSymbolAtLocation(node.expression);
+        if (symbol && symbol.declarations && symbol.declarations.length > 0) {
+          const declaration = symbol.declarations[0];
+          if (
+            ts.isFunctionDeclaration(declaration) ||
+            ts.isArrowFunction(declaration)
+          ) {
+            type = "function";
+            signature = getMethodSignature(declaration);
+          } else {
+            signature = typeChecker.typeToString(
+              typeChecker.getTypeAtLocation(node.expression),
+            );
+          }
+        }
+      } else if (ts.isObjectLiteralExpression(node.expression)) {
+        signature = "{...}";
+      } else if (
+        ts.isFunctionExpression(node.expression) ||
+        ts.isArrowFunction(node.expression)
+      ) {
+        type = "function";
+        signature = getMethodSignature(node.expression);
+      } else {
+        signature = node.expression.getText();
+      }
+
+      exportNode = {
+        name,
+        type,
+        visibility,
+        isDefault: true,
+        signature,
+      };
+      nodes.push(exportNode);
+    } else if (ts.isExportDeclaration(node)) {
+      if (node.exportClause && ts.isNamedExports(node.exportClause)) {
+        for (const element of node.exportClause.elements) {
+          const name = element.name.text;
+          const propertyName = element.propertyName?.text;
+          const signature = typeChecker.typeToString(
+            typeChecker.getTypeAtLocation(element),
+          );
+          exportNode = {
+            name: propertyName ? `${propertyName} as ${name}` : name,
+            type: "const",
+            visibility: VisibilityLevel.Public,
+            isDefault: false,
+            signature,
+          };
+          nodes.push(exportNode);
+        }
+      } else if (node.moduleSpecifier) {
+        // Handle re-exports
+        const moduleName = node.moduleSpecifier.getText().slice(1, -1); // Remove quotes
+        exportNode = {
+          name: `* from "${moduleName}"`,
+          type: "const",
+          visibility: VisibilityLevel.Public,
+          isDefault: false,
+          signature: `module "${moduleName}"`,
+        };
+        nodes.push(exportNode);
       }
     }
   });
@@ -232,7 +350,8 @@ function traverseDirectory(
     const fullPath = path.join(dir, entry.name);
     return (
       pathFilter(fullPath) &&
-      (entry.isDirectory() || (entry.isFile() && entry.name.endsWith(".ts")))
+      (entry.isDirectory() ||
+        (entry.isFile() && TS_FILE_MATCH.test(entry.name)))
     );
   });
 
