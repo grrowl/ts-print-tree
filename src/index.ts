@@ -161,15 +161,25 @@ function analyzeFile(
             ts.isSetAccessor(member)) &&
           isVisibleEnough(getVisibility(member)),
       )
-      .map(
-        (member): TreeNode => ({
-          name: ts.isConstructorDeclaration(member)
-            ? "constructor"
-            : ts.isGetAccessor(member)
-              ? `get ${member.name.getText()}`
-              : ts.isSetAccessor(member)
-                ? `set ${member.name.getText()}`
-                : member.name?.getText() || "<anonymous>",
+      .map((member): TreeNode => {
+        const isStatic = member.modifiers?.some(
+          (mod) => mod.kind === ts.SyntaxKind.StaticKeyword,
+        );
+        const visibility = getVisibility(member);
+        let name = ts.isConstructorDeclaration(member)
+          ? "constructor"
+          : ts.isGetAccessor(member)
+            ? `get ${member.name.getText()}`
+            : ts.isSetAccessor(member)
+              ? `set ${member.name.getText()}`
+              : member.name?.getText() || "<anonymous>";
+
+        if (isStatic) {
+          name = `static ${name}`;
+        }
+
+        return {
+          name,
           type:
             ts.isMethodDeclaration(member) ||
             ts.isConstructorDeclaration(member) ||
@@ -177,103 +187,32 @@ function analyzeFile(
             ts.isSetAccessor(member)
               ? "method"
               : "property",
-          visibility: getVisibility(member),
+          visibility,
           signature: getMethodSignature(member),
-        }),
-      );
+        };
+      });
   }
 
   ts.forEachChild(sourceFile, (node) => {
     let exportNode: TreeNode | null = null;
 
-    if (ts.isExportAssignment(node)) {
-      // Handle `export default ...` cases
-      const expression = node.expression;
-      const name = "default";
-      const isDefault = true;
-      let type: TreeNode["type"] = "const";
-      let signature: string | undefined;
-
-      if (ts.isIdentifier(expression)) {
-        signature = typeChecker.typeToString(
-          typeChecker.getTypeAtLocation(expression),
-        );
-      } else if (ts.isObjectLiteralExpression(expression)) {
-        signature = "{...}";
-      } else if (
-        ts.isFunctionExpression(expression) ||
-        ts.isArrowFunction(expression)
-      ) {
-        type = "function";
-        signature = getMethodSignature(expression);
-      } else if (
-        ts.isStringLiteral(expression) ||
-        ts.isNumericLiteral(expression) ||
-        expression.kind === ts.SyntaxKind.TrueKeyword ||
-        expression.kind === ts.SyntaxKind.FalseKeyword ||
-        expression.kind === ts.SyntaxKind.NullKeyword
-      ) {
-        signature = expression.getText();
-      }
-
-      exportNode = {
-        name,
-        type,
-        visibility: VisibilityLevel.Public,
-        isDefault,
-        signature,
-      };
-    } else if (
-      ts.isFunctionDeclaration(node) ||
-      ts.isClassDeclaration(node) ||
-      ts.isInterfaceDeclaration(node)
-    ) {
-      const name = node.name ? node.name.text : "<anonymous>";
-      const isDefault = !!(
-        ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Default
-      );
-      const visibility = getVisibility(node);
-      let type: TreeNode["type"] = "const";
-      let signature: string | undefined;
-
-      if (ts.isFunctionDeclaration(node)) {
-        type = "function";
-        signature = getMethodSignature(node);
-      } else if (ts.isClassDeclaration(node)) {
-        type = "class";
-        signature = "class";
-        exportNode = {
-          name,
-          type,
-          visibility,
-          isDefault,
-          signature,
-          children: handleClassMembers(node),
-        };
-      } else {
-        type = "interface";
-        signature = "interface";
-      }
-
-      if (!exportNode) {
-        exportNode = { name, type, visibility, isDefault, signature };
-      }
-    } else if (ts.isVariableStatement(node)) {
+    if (ts.isVariableStatement(node)) {
       const isExport =
         node.modifiers?.some(
           (modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword,
         ) ?? false;
-
-      if (isExport) {
-        const declarations = node.declarationList.declarations;
-        for (const declaration of declarations) {
-          if (ts.isIdentifier(declaration.name)) {
-            const name = declaration.name.text;
+      const declarations = node.declarationList.declarations;
+      for (const declaration of declarations) {
+        if (ts.isIdentifier(declaration.name)) {
+          const name = declaration.name.text;
+          const visibility = isExport
+            ? VisibilityLevel.Public
+            : getVisibility(node);
+          if (isVisibleEnough(visibility)) {
             const isDefault =
               node.modifiers?.some(
                 (modifier) => modifier.kind === ts.SyntaxKind.DefaultKeyword,
               ) ?? false;
-            const visibility = VisibilityLevel.Public; // Exported variables are always public
             const signature = getMethodSignature(declaration);
             exportNode = {
               name,
@@ -286,6 +225,74 @@ function analyzeFile(
           }
         }
       }
+    } else if (
+      ts.isInterfaceDeclaration(node) ||
+      ts.isClassDeclaration(node) ||
+      ts.isFunctionDeclaration(node)
+    ) {
+      const name = node.name ? node.name.text : "<anonymous>";
+      const visibility = getVisibility(node);
+      if (isVisibleEnough(visibility)) {
+        const type = ts.isInterfaceDeclaration(node)
+          ? "interface"
+          : ts.isClassDeclaration(node)
+            ? "class"
+            : "function";
+        exportNode = {
+          name,
+          type,
+          visibility,
+          signature: type === "function" ? getMethodSignature(node) : undefined,
+          children:
+            type === "class"
+              ? handleClassMembers(node as ts.ClassDeclaration)
+              : undefined,
+        };
+        nodes.push(exportNode);
+      }
+    } else if (ts.isExportAssignment(node)) {
+      // Handle default exports
+      const name = "default";
+      const visibility = VisibilityLevel.Public;
+      let type: TreeNode["type"] = "const";
+      let signature: string | undefined;
+
+      if (ts.isIdentifier(node.expression)) {
+        const symbol = typeChecker.getSymbolAtLocation(node.expression);
+        if (symbol && symbol.declarations && symbol.declarations.length > 0) {
+          const declaration = symbol.declarations[0];
+          if (
+            ts.isFunctionDeclaration(declaration) ||
+            ts.isArrowFunction(declaration)
+          ) {
+            type = "function";
+            signature = getMethodSignature(declaration);
+          } else {
+            signature = typeChecker.typeToString(
+              typeChecker.getTypeAtLocation(node.expression),
+            );
+          }
+        }
+      } else if (ts.isObjectLiteralExpression(node.expression)) {
+        signature = "{...}";
+      } else if (
+        ts.isFunctionExpression(node.expression) ||
+        ts.isArrowFunction(node.expression)
+      ) {
+        type = "function";
+        signature = getMethodSignature(node.expression);
+      } else {
+        signature = node.expression.getText();
+      }
+
+      exportNode = {
+        name,
+        type,
+        visibility,
+        isDefault: true,
+        signature,
+      };
+      nodes.push(exportNode);
     } else if (ts.isExportDeclaration(node)) {
       if (node.exportClause && ts.isNamedExports(node.exportClause)) {
         for (const element of node.exportClause.elements) {
@@ -313,60 +320,8 @@ function analyzeFile(
           isDefault: false,
           signature: `module "${moduleName}"`,
         };
+        nodes.push(exportNode);
       }
-    } else if (
-      ts.isBinaryExpression(node) &&
-      node.operatorToken.kind === ts.SyntaxKind.EqualsToken
-    ) {
-      // Handle `exports.default = ...` cases
-      const left = node.left;
-      if (
-        ts.isPropertyAccessExpression(left) &&
-        ts.isIdentifier(left.expression) &&
-        left.expression.text === "exports" &&
-        ts.isIdentifier(left.name) &&
-        left.name.text === "default"
-      ) {
-        const right = node.right;
-        const name = "default";
-        const isDefault = true;
-        let type: TreeNode["type"] = "const";
-        let signature: string | undefined;
-
-        if (
-          ts.isStringLiteral(right) ||
-          ts.isNumericLiteral(right) ||
-          right.kind === ts.SyntaxKind.TrueKeyword ||
-          right.kind === ts.SyntaxKind.FalseKeyword ||
-          right.kind === ts.SyntaxKind.NullKeyword
-        ) {
-          signature = right.getText();
-        } else if (ts.isIdentifier(right)) {
-          signature = typeChecker.typeToString(
-            typeChecker.getTypeAtLocation(right),
-          );
-        } else if (ts.isObjectLiteralExpression(right)) {
-          signature = "{...}";
-        } else if (
-          ts.isFunctionExpression(right) ||
-          ts.isArrowFunction(right)
-        ) {
-          type = "function";
-          signature = getMethodSignature(right);
-        }
-
-        exportNode = {
-          name,
-          type,
-          visibility: VisibilityLevel.Public,
-          isDefault,
-          signature,
-        };
-      }
-    }
-
-    if (exportNode && isVisibleEnough(exportNode.visibility)) {
-      nodes.push(exportNode);
     }
   });
 
