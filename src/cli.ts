@@ -51,7 +51,9 @@ function formatNodeName(node: TreeNode): string {
     return `${node.name}`;
   } else if (node.type === "method" || node.type === "function") {
     return `${visibilityPrefix}${node.type} ${node.name}${node.signature ? node.signature : ""}`;
-  } else if (node.type === "class" || node.type === "interface") {
+  } else if (node.type === "class") {
+    return `${visibilityPrefix}${node.type} ${node.name}${node.superclass ? ` extends ${node.superclass}` : ""}`;
+  } else if (node.type === "interface") {
     return `${visibilityPrefix}${node.type} ${node.name}`;
   } else {
     return `${visibilityPrefix}${node.type} ${node.name}${node.signature ? `: ${node.signature}` : ""}`;

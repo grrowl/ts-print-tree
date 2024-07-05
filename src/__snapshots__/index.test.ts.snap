@@ -22,14 +22,12 @@ exports[`tree module calls tree() with private visibility and matches snapshot 1
               "visibility": "private",
             },
             {
-              "children": undefined,
               "name": "printHelp",
               "signature": "(): void",
               "type": "function",
               "visibility": "private",
             },
             {
-              "children": undefined,
               "name": "printVersion",
               "signature": "(): void",
               "type": "function",
@@ -43,21 +41,18 @@ exports[`tree module calls tree() with private visibility and matches snapshot 1
               "visibility": "public",
             },
             {
-              "children": undefined,
               "name": "formatNodeName",
               "signature": "(node: TreeNode): string",
               "type": "function",
               "visibility": "private",
             },
             {
-              "children": undefined,
               "name": "formatAsTree",
               "signature": "(node: TreeNode, prefix?: string, isLast?: boolean, isRoot?: boolean): string",
               "type": "function",
               "visibility": "public",
             },
             {
-              "children": undefined,
               "name": "formatAsList",
               "signature": "(node: TreeNode, depth?: number): string",
               "type": "function",
@@ -77,42 +72,36 @@ exports[`tree module calls tree() with private visibility and matches snapshot 1
               "visibility": "private",
             },
             {
-              "children": undefined,
               "name": "TreeNode",
               "signature": undefined,
               "type": "interface",
               "visibility": "public",
             },
             {
-              "children": undefined,
               "name": "readTsConfig",
               "signature": "(rootDir: string): ParsedCommandLine",
               "type": "function",
               "visibility": "private",
             },
             {
-              "children": undefined,
               "name": "createProgram",
               "signature": "(rootDir: string): Program",
               "type": "function",
               "visibility": "private",
             },
             {
-              "children": undefined,
               "name": "analyzeFile",
               "signature": "(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): TreeNode[]",
               "type": "function",
               "visibility": "private",
             },
             {
-              "children": undefined,
               "name": "traverseDirectory",
               "signature": "(dir: string, program: Program, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode",
               "type": "function",
               "visibility": "private",
             },
             {
-              "children": undefined,
               "name": "tree",
               "signature": "(rootDir?: string, pathFilter?: (path: string) => boolean, visibilityLevel?: VisibilityLevel): TreeNode",
               "type": "function",
@@ -155,7 +144,7 @@ exports[`tree module calls tree() with private visibility and matches snapshot 1
                     },
                   ],
                   "name": "DefaultClass",
-                  "signature": undefined,
+                  "superclass": undefined,
                   "type": "class",
                   "visibility": "public",
                 },
@@ -205,7 +194,7 @@ exports[`tree module calls tree() with private visibility and matches snapshot 1
                     },
                   ],
                   "name": "NamedClass",
-                  "signature": undefined,
+                  "superclass": "DefaultClass",
                   "type": "class",
                   "visibility": "public",
                 },
@@ -251,7 +240,6 @@ exports[`tree module calls tree() with private visibility and matches snapshot 1
                   "visibility": "public",
                 },
                 {
-                  "children": undefined,
                   "name": "PublicInterface",
                   "signature": undefined,
                   "type": "interface",
@@ -291,7 +279,6 @@ exports[`tree module calls tree() with private visibility and matches snapshot 1
             {
               "children": [
                 {
-                  "children": undefined,
                   "name": "<anonymous>",
                   "signature": "(a: number, b: number): string",
                   "type": "function",

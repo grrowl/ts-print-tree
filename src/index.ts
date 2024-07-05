@@ -25,6 +25,7 @@ export interface TreeNode {
   signature?: string;
   children?: TreeNode[];
   isDefault?: boolean;
+  superclass?: string;
 }
 
 function readTsConfig(rootDir: string): ts.ParsedCommandLine {
@@ -69,22 +70,6 @@ function analyzeFile(
       }
     }
     return typeChecker.typeToString(typeChecker.getTypeAtLocation(node));
-  }
-
-  // Helper function to check if a node is an exported declaration
-  function isExportedDeclaration(node: ts.Node): boolean {
-    return (
-      (ts.isVariableStatement(node) ||
-        ts.isFunctionDeclaration(node) ||
-        ts.isClassDeclaration(node) ||
-        ts.isInterfaceDeclaration(node) ||
-        ts.isTypeAliasDeclaration(node) ||
-        ts.isEnumDeclaration(node)) &&
-      node.modifiers !== undefined &&
-      node.modifiers.some(
-        (modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword,
-      )
-    );
   }
 
   function isVisibleEnough(visibility: VisibilityLevel): boolean {
@@ -225,28 +210,48 @@ function analyzeFile(
           }
         }
       }
+    } else if (ts.isClassDeclaration(node)) {
+      const name = node.name ? node.name.text : "<anonymous>";
+      const visibility = getVisibility(node);
+
+      if (isVisibleEnough(visibility)) {
+        let superclass: string | undefined;
+        if (node.heritageClauses) {
+          for (const clause of node.heritageClauses) {
+            if (
+              clause.token === ts.SyntaxKind.ExtendsKeyword &&
+              clause.types.length > 0
+            ) {
+              const superclassType = typeChecker.getTypeAtLocation(
+                clause.types[0],
+              );
+              superclass = typeChecker.typeToString(superclassType);
+              break;
+            }
+          }
+        }
+        exportNode = {
+          name,
+          type: "class",
+          visibility,
+          children: handleClassMembers(node),
+          superclass,
+        };
+        nodes.push(exportNode);
+      }
     } else if (
       ts.isInterfaceDeclaration(node) ||
-      ts.isClassDeclaration(node) ||
       ts.isFunctionDeclaration(node)
     ) {
       const name = node.name ? node.name.text : "<anonymous>";
       const visibility = getVisibility(node);
       if (isVisibleEnough(visibility)) {
-        const type = ts.isInterfaceDeclaration(node)
-          ? "interface"
-          : ts.isClassDeclaration(node)
-            ? "class"
-            : "function";
+        const type = ts.isInterfaceDeclaration(node) ? "interface" : "function";
         exportNode = {
           name,
           type,
           visibility,
           signature: type === "function" ? getMethodSignature(node) : undefined,
-          children:
-            type === "class"
-              ? handleClassMembers(node as ts.ClassDeclaration)
-              : undefined,
         };
         nodes.push(exportNode);
       }

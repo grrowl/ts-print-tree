@@ -29,7 +29,7 @@ exports[`cli module call with arguments: ['--list', '--private'] 1`] = `
           - property static foo: string
           - property bar: string[]
           - method constructor(baz: number[]): DefaultClass
-        - class NamedClass
+        - class NamedClass extends DefaultClass
           - private property static version: number
           - method get version(): number
           - method constructor(): NamedClass
@@ -73,7 +73,7 @@ exports[`cli module call with no arguments 1`] = `
         │   │   ├── property static foo: string
         │   │   ├── property bar: string[]
         │   │   └── method constructor(baz: number[]): DefaultClass
-        │   ├── class NamedClass
+        │   ├── class NamedClass extends DefaultClass
         │   │   ├── method get version(): number
         │   │   ├── method constructor(): NamedClass
         │   │   ├── method double(): void
