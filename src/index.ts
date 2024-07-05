@@ -22,6 +22,7 @@ export interface TreeNode {
   visibility?: "public" | "protected" | "private";
   signature?: string;
   children?: TreeNode[];
+  isDefault?: boolean;
 }
 
 function readTsConfig(rootDir: string): ts.ParsedCommandLine {
@@ -147,6 +148,14 @@ function analyzeFile(
           exportType = "const";
           name = declaration.name.text;
           visibility = getVisibility(node) as TreeNode["visibility"];
+          // Check if this is a default export
+          isDefault =
+            node.modifiers?.some(
+              (modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword,
+            ) &&
+            node.modifiers?.some(
+              (modifier) => modifier.kind === ts.SyntaxKind.DefaultKeyword,
+            );
         }
       }
 
@@ -157,6 +166,7 @@ function analyzeFile(
           name,
           type: exportType,
           visibility,
+          isDefault,
         };
 
         if (ts.isClassDeclaration(node)) {

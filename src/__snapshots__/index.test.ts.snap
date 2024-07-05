@@ -41,6 +41,8 @@ exports[`cli module calls tree() and formats as list, with custom visibility lev
         - interface PublicInterface
         - private const privateFunction
         - const publicFunction
+      - default-function.ts
+        - function <anonymous>(a: number, b: number): string
 "
 `;
 
@@ -64,10 +66,12 @@ exports[`cli module calls tree() and formats as tree 1`] = `
         │       ├── method constructor(): void
         │       ├── method double(): void
         │       └── method octuple(): void
-        └── consts.ts
-            ├── const publicArray
-            ├── interface PublicInterface
-            └── const publicFunction
+        ├── consts.ts
+        │   ├── const publicArray
+        │   ├── interface PublicInterface
+        │   └── const publicFunction
+        └── default-function.ts
+            └── function <anonymous>(a: number, b: number): string
 "
 `;
 
@@ -85,6 +89,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                     {
                       "children": [
                         {
+                          "isDefault": false,
                           "name": "Jest",
                           "type": "interface",
                           "visibility": "public",
@@ -152,16 +157,19 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                               "visibility": "public",
                             },
                           ],
+                          "isDefault": false,
                           "name": "JestEnvironment",
                           "type": "class",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "JestEnvironmentConfig",
                           "type": "interface",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "JestImportMeta",
                           "type": "interface",
                           "visibility": "public",
@@ -185,6 +193,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                     {
                       "children": [
                         {
+                          "isDefault": false,
                           "name": "jestExpect",
                           "type": "const",
                           "visibility": "public",
@@ -208,83 +217,99 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                     {
                       "children": [
                         {
+                          "isDefault": false,
                           "name": "arrayBufferEquality",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "emptyObject",
                           "signature": "(obj: unknown): boolean",
                           "type": "function",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "equals",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "getObjectKeys",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "getObjectSubset",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "getPath",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "isA",
                           "signature": "(typeName: string, value: unknown): boolean",
                           "type": "function",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "isError",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "isOneline",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "iterableEquality",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "partition",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "pathAsArray",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "sparseArrayEquality",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "subsetEquality",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "TesterContext",
                           "type": "interface",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "typeEquality",
                           "type": "const",
                           "visibility": "public",
@@ -406,6 +431,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                               "visibility": "public",
                             },
                           ],
+                          "isDefault": false,
                           "name": "LegacyFakeTimers",
                           "type": "class",
                           "visibility": "public",
@@ -530,6 +556,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                               "visibility": "public",
                             },
                           ],
+                          "isDefault": false,
                           "name": "ModernFakeTimers",
                           "type": "class",
                           "visibility": "public",
@@ -553,66 +580,79 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                     {
                       "children": [
                         {
+                          "isDefault": false,
                           "name": "expect",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "it",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "test",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "fit",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "xit",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "xtest",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "describe",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "xdescribe",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "fdescribe",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "beforeAll",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "beforeEach",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "afterEach",
                           "type": "const",
                           "visibility": "public",
                         },
                         {
+                          "isDefault": false,
                           "name": "afterAll",
                           "type": "const",
                           "visibility": "public",
@@ -636,6 +676,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                     {
                       "children": [
                         {
+                          "isDefault": false,
                           "name": "SnapshotFormat",
                           "type": "const",
                           "visibility": "public",
@@ -663,266 +704,319 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "Modifier",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Hint",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Kind",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "PatternBoolean",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "PatternNumber",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "PatternString",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "PatternBooleanExact",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "PatternNumberExact",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "PatternStringExact",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "SchemaOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TKind",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TSchema",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "NumericOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TAny",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ArrayOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TArray",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TBigInt",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TBoolean",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TComposite",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TConstructor",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "DateOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TDate",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TEnumOption",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TEnum",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TFunction",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TInteger",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "IntersectOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TIntersect",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TLiteral",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TNever",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TNot",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TNull",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TNumber",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ObjectOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TObject",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TPromise",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TRecord",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TThis",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TRecursive",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TRef",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "StringOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TString",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TSymbol",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TTemplateLiteral",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TTuple",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TUndefined",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TUnion",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Uint8ArrayOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TUint8Array",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TUnknown",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "UnsafeOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TUnsafe",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TVoid",
                       "type": "interface",
                       "visibility": "public",
@@ -942,6 +1036,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "TypeGuardUnknownTypeError",
                       "type": "class",
                       "visibility": "public",
@@ -955,6 +1050,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "TemplateLiteralParserError",
                       "type": "class",
                       "visibility": "public",
@@ -968,6 +1064,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "TypeBuilder",
                       "type": "class",
                       "visibility": "public",
@@ -1263,6 +1360,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "StandardTypeBuilder",
                       "type": "class",
                       "visibility": "public",
@@ -1366,16 +1464,19 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "ExtendedTypeBuilder",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "StandardType",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Type",
                       "type": "const",
                       "visibility": "public",
@@ -1399,230 +1500,271 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "version",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "DEFAULT_EXTENSIONS",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TransformOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TransformCaller",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "MatchPatternContext",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transform",
                       "signature": "(code: string, callback: FileResultCallback): void",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transform",
                       "signature": "(code: string, opts: TransformOptions, callback: FileResultCallback): void",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transform",
                       "signature": "(code: string, opts: TransformOptions): BabelFileResult",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transformSync",
                       "signature": "(code: string, opts: TransformOptions): BabelFileResult",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transformAsync",
                       "signature": "(code: string, opts: TransformOptions): Promise<BabelFileResult>",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transformFile",
                       "signature": "(filename: string, callback: FileResultCallback): void",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transformFile",
                       "signature": "(filename: string, opts: TransformOptions, callback: FileResultCallback): void",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transformFileSync",
                       "signature": "(filename: string, opts: TransformOptions): BabelFileResult",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transformFileAsync",
                       "signature": "(filename: string, opts: TransformOptions): Promise<BabelFileResult>",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transformFromAst",
                       "signature": "(ast: Node, code: string, callback: FileResultCallback): void",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transformFromAst",
                       "signature": "(ast: Node, code: string, opts: TransformOptions, callback: FileResultCallback): void",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transformFromAstSync",
                       "signature": "(ast: Node, code: string, opts: TransformOptions): BabelFileResult",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "transformFromAstAsync",
                       "signature": "(ast: Node, code: string, opts: TransformOptions): Promise<BabelFileResult>",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "PluginObj",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "BabelFile",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "PluginPass",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "BabelFileResult",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "BabelFileMetadata",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "BabelFileModulesMetadata",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "parse",
                       "signature": "(code: string, callback: FileParseCallback): void",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "parse",
                       "signature": "(code: string, options: TransformOptions, callback: FileParseCallback): void",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "parse",
                       "signature": "(code: string, options: TransformOptions): ParseResult<File>",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "parseSync",
                       "signature": "(code: string, options: TransformOptions): ParseResult<File>",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "parseAsync",
                       "signature": "(code: string, options: TransformOptions): Promise<ParseResult<File>>",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "loadOptions",
                       "signature": "(options: TransformOptions): object",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "loadPartialConfig",
                       "signature": "(options: TransformOptions): Readonly<PartialConfig>",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "loadPartialConfigAsync",
                       "signature": "(options: TransformOptions): Promise<Readonly<PartialConfig>>",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "PartialConfig",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ConfigItem",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "resolvePlugin",
                       "signature": "(name: string, dirname: string): string",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "resolvePreset",
                       "signature": "(name: string, dirname: string): string",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "CreateConfigItemOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "createConfigItem",
                       "signature": "(value: PluginTarget | [PluginTarget, PluginOptions] | [PluginTarget, PluginOptions, string], options: CreateConfigItemOptions): ConfigItem",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ConfigAPI",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "SimpleCacheConfigurator",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "EnvFunction",
                       "type": "interface",
                       "visibility": "public",
@@ -1640,6 +1782,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "GeneratorOptions",
                       "type": "interface",
                       "visibility": "public",
@@ -1659,17 +1802,20 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "CodeGenerator",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": true,
                       "name": "generate",
                       "signature": "(ast: Node, opts: GeneratorOptions, code: string | { [filename: string]: string; }): GeneratorResult",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "GeneratorResult",
                       "type": "interface",
                       "visibility": "public",
@@ -1687,36 +1833,43 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "TemplateBuilderOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TemplateBuilder",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "smart",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "statement",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "statements",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "expression",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "program",
                       "type": "const",
                       "visibility": "public",
@@ -2108,6 +2261,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "Scope",
                       "type": "class",
                       "visibility": "public",
@@ -2229,11 +2383,13 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "Binding",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "VisitNodeObject",
                       "type": "interface",
                       "visibility": "public",
@@ -6687,11 +6843,13 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "NodePath",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "HubInterface",
                       "type": "interface",
                       "visibility": "public",
@@ -6729,16 +6887,19 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "Hub",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TraversalContext",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "VirtualTypeAliases",
                       "type": "interface",
                       "visibility": "public",
@@ -6756,6 +6917,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "gracefulify",
                       "signature": "(fsModule: T): T",
                       "type": "function",
@@ -6774,6 +6936,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "CoverageSummaryData",
                       "type": "interface",
                       "visibility": "public",
@@ -6835,11 +6998,13 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "CoverageSummary",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "CoverageMapData",
                       "type": "interface",
                       "visibility": "public",
@@ -6901,41 +7066,49 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "CoverageMap",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Location",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Range",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "BranchMapping",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "FunctionMapping",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "FileCoverageData",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Totals",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Coverage",
                       "type": "interface",
                       "visibility": "public",
@@ -7051,28 +7224,33 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "FileCoverage",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "classes",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "createCoverageMap",
                       "signature": "(data: CoverageMapData | CoverageMap): CoverageMap",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "createCoverageSummary",
                       "signature": "(obj: CoverageSummary | CoverageSummaryData): CoverageSummary",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "createFileCoverage",
                       "signature": "(pathOrObject: string | FileCoverage | FileCoverageData): FileCoverage",
                       "type": "function",
@@ -7091,12 +7269,14 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "createContext",
                       "signature": "(options: Partial<ContextOptions>): Context",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "getDefaultWatermarks",
                       "signature": "(): Watermarks",
                       "type": "function",
@@ -7117,21 +7297,25 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "ReportBase",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ReportBaseOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ContextOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Context",
                       "type": "interface",
                       "visibility": "public",
@@ -7157,6 +7341,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "ContentWriter",
                       "type": "class",
                       "visibility": "public",
@@ -7176,6 +7361,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "FileContentWriter",
                       "type": "class",
                       "visibility": "public",
@@ -7189,6 +7375,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "ConsoleWriter",
                       "type": "class",
                       "visibility": "public",
@@ -7244,36 +7431,43 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "FileWriter",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "XmlWriter",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Watermarks",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Node",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ReportNode",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Visitor",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Tree",
                       "type": "interface",
                       "visibility": "public",
@@ -7291,67 +7485,80 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "create",
                       "signature": "(name: T, options: Partial<ReportOptions[T]>): ReportBase",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "FileOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ProjectOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ReportOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "CloverOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "CoberturaOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "HtmlSpaOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "HtmlOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "LcovOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "LcovOnlyOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TeamcityOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "TextOptions",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "LinkMapper",
                       "type": "interface",
                       "visibility": "public",
@@ -7413,16 +7620,19 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "AsymmetricMatcher",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "AsymmetricMatchers",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "BaseExpect",
                       "type": "interface",
                       "visibility": "public",
@@ -7436,21 +7646,25 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "JestAssertionError",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Matchers",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "MatcherState",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "MatcherUtils",
                       "type": "interface",
                       "visibility": "public",
@@ -7494,52 +7708,62 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "Diff",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "diff",
                       "signature": "(a: any, b: any, options: DiffOptions): string",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "DIFF_DELETE",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "DIFF_EQUAL",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "DIFF_INSERT",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "diffLinesRaw",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "diffLinesUnified",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "diffLinesUnified2",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "diffStringsRaw",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "diffStringsUnified",
                       "type": "const",
                       "visibility": "public",
@@ -7563,118 +7787,141 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "BOLD_WEIGHT",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "diff",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "DIM_COLOR",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ensureActualIsNumber",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ensureExpectedIsNonNegativeInteger",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ensureExpectedIsNumber",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ensureNoExpected",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "ensureNumbers",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "EXPECTED_COLOR",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "getLabelPrinter",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "highlightTrailingWhitespace",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "INVERTED_COLOR",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "matcherErrorMessage",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "matcherHint",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "pluralize",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "printDiffOrStringify",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "printExpected",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "printReceived",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "printWithType",
                       "signature": "(name: string, value: T, print: (value: T) => string): string",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "RECEIVED_COLOR",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "replaceMatchedToAsymmetricMatcher",
                       "signature": "(replacedExpected: unknown, replacedReceived: unknown, expectedCycles: unknown[], receivedCycles: unknown[]): { replacedExpected: unknown; replacedReceived: unknown; }",
                       "type": "function",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "stringify",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "SUGGEST_TO_CONTAIN_EQUAL",
                       "type": "const",
                       "visibility": "public",
@@ -7698,46 +7945,55 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "formatExecError",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "formatPath",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "formatResultsErrors",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "formatStackTrace",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Frame",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "getStackTraceLines",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "getTopFrame",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "indentAllLines",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "separateMessageFromStack",
                       "type": "const",
                       "visibility": "public",
@@ -7761,21 +8017,25 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "fn",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Mock",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "mocked",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "MockInstance",
                       "type": "interface",
                       "visibility": "public",
@@ -7873,26 +8133,31 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "ModuleMocker",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Replaced",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "replaceProperty",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "SpyInstance",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "spyOn",
                       "type": "const",
                       "visibility": "public",
@@ -7916,41 +8181,49 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "addSerializer",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "buildSnapshotResolver",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "cleanup",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Context",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "EXTENSION",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "getSerializers",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "isSnapshotPath",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "SnapshotMatchers",
                       "type": "interface",
                       "visibility": "public",
@@ -8055,26 +8328,31 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                           "visibility": "public",
                         },
                       ],
+                      "isDefault": false,
                       "name": "SnapshotState",
                       "type": "class",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "toMatchInlineSnapshot",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "toMatchSnapshot",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "toThrowErrorMatchingInlineSnapshot",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "toThrowErrorMatchingSnapshot",
                       "type": "const",
                       "visibility": "public",
@@ -8098,21 +8376,25 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                 {
                   "children": [
                     {
+                      "isDefault": false,
                       "name": "DEFAULT_OPTIONS",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "Options",
                       "type": "interface",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "plugins",
                       "type": "const",
                       "visibility": "public",
                     },
                     {
+                      "isDefault": false,
                       "name": "PrettyFormatOptions",
                       "type": "interface",
                       "visibility": "public",
@@ -8134,26 +8416,31 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
             {
               "children": [
                 {
+                  "isDefault": false,
                   "name": "CacheStorage",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "Cache",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "CacheQueryOptions",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "MultiCacheQueryOptions",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "caches",
                   "type": "const",
                   "visibility": "public",
@@ -8191,6 +8478,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "Client",
                   "type": "class",
                   "visibility": "public",
@@ -8202,12 +8490,14 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
             {
               "children": [
                 {
+                  "isDefault": false,
                   "name": "parseMIMEType",
                   "signature": "(input: string): "failure" | MIMEType",
                   "type": "function",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "serializeAMimeType",
                   "signature": "(mimeType: MIMEType): string",
                   "type": "function",
@@ -8220,29 +8510,34 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
             {
               "children": [
                 {
+                  "isDefault": false,
                   "name": "Cookie",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "deleteCookie",
                   "signature": "(headers: Headers, name: string, attributes: { name?: string; domain?: string; }): void",
                   "type": "function",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "getCookies",
                   "signature": "(headers: Headers): Record<string, string>",
                   "type": "function",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "getSetCookies",
                   "signature": "(headers: Headers): Cookie[]",
                   "type": "function",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "setCookie",
                   "signature": "(headers: Headers, cookie: Cookie): void",
                   "type": "function",
@@ -8255,27 +8550,32 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
             {
               "children": [
                 {
+                  "isDefault": false,
                   "name": "fetch",
                   "signature": "(input: RequestInfo, init: RequestInit): Promise<Response>",
                   "type": "function",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "BodyMixin",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "SpecIterator",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "SpecIterableIterator",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "SpecIterable",
                   "type": "interface",
                   "visibility": "public",
@@ -8355,11 +8655,13 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "Headers",
                   "type": "class",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "RequestInit",
                   "type": "interface",
                   "visibility": "public",
@@ -8499,11 +8801,13 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "Request",
                   "type": "class",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "ResponseInit",
                   "type": "interface",
                   "visibility": "public",
@@ -8625,6 +8929,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "Response",
                   "type": "class",
                   "visibility": "public",
@@ -8636,11 +8941,13 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
             {
               "children": [
                 {
+                  "isDefault": false,
                   "name": "BlobPropertyBag",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "FilePropertyBag",
                   "type": "interface",
                   "visibility": "public",
@@ -8672,6 +8979,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "File",
                   "type": "class",
                   "visibility": "public",
@@ -8817,11 +9125,13 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "FileReader",
                   "type": "class",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "ProgressEventInit",
                   "type": "interface",
                   "visibility": "public",
@@ -8859,6 +9169,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "ProgressEvent",
                   "type": "class",
                   "visibility": "public",
@@ -8944,6 +9255,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "FormData",
                   "type": "class",
                   "visibility": "public",
@@ -8963,6 +9275,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "RedirectHandler",
                   "type": "class",
                   "visibility": "public",
@@ -8976,6 +9289,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "DecoratorHandler",
                   "type": "class",
                   "visibility": "public",
@@ -8987,6 +9301,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
             {
               "children": [
                 {
+                  "isDefault": false,
                   "name": "createRedirectInterceptor",
                   "signature": "(opts: RedirectInterceptorOpts): DispatchInterceptor",
                   "type": "function",
@@ -8999,26 +9314,31 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
             {
               "children": [
                 {
+                  "isDefault": false,
                   "name": "EventInit",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "EventListenerOptions",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "AddEventListenerOptions",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "EventListenerObject",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "EventListener",
                   "type": "interface",
                   "visibility": "public",
@@ -9030,16 +9350,19 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
             {
               "children": [
                 {
+                  "isDefault": false,
                   "name": "WebSocket",
                   "type": "const",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "CloseEvent",
                   "type": "const",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "MessageEvent",
                   "type": "const",
                   "visibility": "public",
@@ -9061,17 +9384,20 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
         {
           "children": [
             {
+              "isDefault": false,
               "name": "pathFilter",
               "type": "const",
               "visibility": "public",
             },
             {
+              "isDefault": false,
               "name": "formatAsTree",
               "signature": "(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string",
               "type": "function",
               "visibility": "public",
             },
             {
+              "isDefault": false,
               "name": "formatAsList",
               "signature": "(node: TreeNode, depth: number): string",
               "type": "function",
@@ -9084,11 +9410,13 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
         {
           "children": [
             {
+              "isDefault": false,
               "name": "TreeNode",
               "type": "interface",
               "visibility": "public",
             },
             {
+              "isDefault": false,
               "name": "tree",
               "signature": "(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode",
               "type": "function",
@@ -9123,6 +9451,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": true,
                   "name": "DefaultClass",
                   "type": "class",
                   "visibility": "public",
@@ -9148,6 +9477,7 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "NamedClass",
                   "type": "class",
                   "visibility": "public",
@@ -9159,22 +9489,38 @@ exports[`tree module calls tree() and matches result snapshot 1`] = `
             {
               "children": [
                 {
+                  "isDefault": false,
                   "name": "publicArray",
                   "type": "const",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "PublicInterface",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "publicFunction",
                   "type": "const",
                   "visibility": "public",
                 },
               ],
               "name": "consts.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "isDefault": true,
+                  "name": "<anonymous>",
+                  "signature": "(a: number, b: number): string",
+                  "type": "function",
+                  "visibility": "public",
+                },
+              ],
+              "name": "default-function.ts",
               "type": "file",
             },
           ],
@@ -9199,17 +9545,20 @@ exports[`tree module calls tree() with custom ignored patterns and matches resul
         {
           "children": [
             {
+              "isDefault": false,
               "name": "pathFilter",
               "type": "const",
               "visibility": "public",
             },
             {
+              "isDefault": false,
               "name": "formatAsTree",
               "signature": "(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string",
               "type": "function",
               "visibility": "public",
             },
             {
+              "isDefault": false,
               "name": "formatAsList",
               "signature": "(node: TreeNode, depth: number): string",
               "type": "function",
@@ -9222,11 +9571,13 @@ exports[`tree module calls tree() with custom ignored patterns and matches resul
         {
           "children": [
             {
+              "isDefault": false,
               "name": "TreeNode",
               "type": "interface",
               "visibility": "public",
             },
             {
+              "isDefault": false,
               "name": "tree",
               "signature": "(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode",
               "type": "function",
@@ -9261,6 +9612,7 @@ exports[`tree module calls tree() with custom ignored patterns and matches resul
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": true,
                   "name": "DefaultClass",
                   "type": "class",
                   "visibility": "public",
@@ -9286,6 +9638,7 @@ exports[`tree module calls tree() with custom ignored patterns and matches resul
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "NamedClass",
                   "type": "class",
                   "visibility": "public",
@@ -9297,22 +9650,38 @@ exports[`tree module calls tree() with custom ignored patterns and matches resul
             {
               "children": [
                 {
+                  "isDefault": false,
                   "name": "publicArray",
                   "type": "const",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "PublicInterface",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "publicFunction",
                   "type": "const",
                   "visibility": "public",
                 },
               ],
               "name": "consts.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "isDefault": true,
+                  "name": "<anonymous>",
+                  "signature": "(a: number, b: number): string",
+                  "type": "function",
+                  "visibility": "public",
+                },
+              ],
+              "name": "default-function.ts",
               "type": "file",
             },
           ],
@@ -9337,45 +9706,53 @@ exports[`tree module calls tree() with custom visibility level and matches resul
         {
           "children": [
             {
+              "isDefault": undefined,
               "name": "args",
               "type": "const",
               "visibility": "private",
             },
             {
+              "isDefault": undefined,
               "name": "defaultIgnore",
               "type": "const",
               "visibility": "private",
             },
             {
+              "isDefault": false,
               "name": "printHelp",
               "signature": "(): void",
               "type": "function",
               "visibility": "private",
             },
             {
+              "isDefault": false,
               "name": "printVersion",
               "signature": "(): void",
               "type": "function",
               "visibility": "private",
             },
             {
+              "isDefault": false,
               "name": "pathFilter",
               "type": "const",
               "visibility": "public",
             },
             {
+              "isDefault": false,
               "name": "formatNodeName",
               "signature": "(node: TreeNode): string",
               "type": "function",
               "visibility": "private",
             },
             {
+              "isDefault": false,
               "name": "formatAsTree",
               "signature": "(node: TreeNode, prefix: string, isLast: boolean, isRoot: boolean): string",
               "type": "function",
               "visibility": "public",
             },
             {
+              "isDefault": false,
               "name": "formatAsList",
               "signature": "(node: TreeNode, depth: number): string",
               "type": "function",
@@ -9388,35 +9765,41 @@ exports[`tree module calls tree() with custom visibility level and matches resul
         {
           "children": [
             {
+              "isDefault": false,
               "name": "TreeNode",
               "type": "interface",
               "visibility": "public",
             },
             {
+              "isDefault": false,
               "name": "readTsConfig",
               "signature": "(rootDir: string): ParsedCommandLine",
               "type": "function",
               "visibility": "private",
             },
             {
+              "isDefault": false,
               "name": "createProgram",
               "signature": "(rootDir: string): Program",
               "type": "function",
               "visibility": "private",
             },
             {
+              "isDefault": false,
               "name": "analyzeFile",
               "signature": "(sourceFile: SourceFile, typeChecker: TypeChecker, visibilityLevel: VisibilityLevel): TreeNode[]",
               "type": "function",
               "visibility": "private",
             },
             {
+              "isDefault": false,
               "name": "traverseDirectory",
               "signature": "(dir: string, program: Program, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode",
               "type": "function",
               "visibility": "private",
             },
             {
+              "isDefault": false,
               "name": "tree",
               "signature": "(rootDir: string, pathFilter: (path: string) => boolean, visibilityLevel: VisibilityLevel): TreeNode",
               "type": "function",
@@ -9431,6 +9814,7 @@ exports[`tree module calls tree() with custom visibility level and matches resul
             {
               "children": [
                 {
+                  "isDefault": undefined,
                   "name": "tree",
                   "type": "const",
                   "visibility": "private",
@@ -9456,6 +9840,7 @@ exports[`tree module calls tree() with custom visibility level and matches resul
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": true,
                   "name": "DefaultClass",
                   "type": "class",
                   "visibility": "public",
@@ -9499,6 +9884,7 @@ exports[`tree module calls tree() with custom visibility level and matches resul
                       "visibility": "public",
                     },
                   ],
+                  "isDefault": false,
                   "name": "NamedClass",
                   "type": "class",
                   "visibility": "public",
@@ -9510,42 +9896,62 @@ exports[`tree module calls tree() with custom visibility level and matches resul
             {
               "children": [
                 {
+                  "isDefault": undefined,
                   "name": "privateString",
                   "type": "const",
                   "visibility": "private",
                 },
                 {
+                  "isDefault": undefined,
                   "name": "privateNumber",
                   "type": "const",
                   "visibility": "private",
                 },
                 {
+                  "isDefault": undefined,
                   "name": "privateBoolean",
                   "type": "const",
                   "visibility": "private",
                 },
                 {
+                  "isDefault": false,
                   "name": "publicArray",
                   "type": "const",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": false,
                   "name": "PublicInterface",
                   "type": "interface",
                   "visibility": "public",
                 },
                 {
+                  "isDefault": undefined,
                   "name": "privateFunction",
                   "type": "const",
                   "visibility": "private",
                 },
                 {
+                  "isDefault": false,
                   "name": "publicFunction",
                   "type": "const",
                   "visibility": "public",
                 },
               ],
               "name": "consts.ts",
+              "type": "file",
+            },
+            {
+              "children": [
+                {
+                  "isDefault": true,
+                  "name": "<anonymous>",
+                  "signature": "(a: number, b: number): string",
+                  "type": "function",
+                  "visibility": "public",
+                },
+              ],
+              "name": "default-function.ts",
               "type": "file",
             },
           ],
