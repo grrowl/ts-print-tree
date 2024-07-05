@@ -1,6 +1,6 @@
 {
   "name": "ts-print-tree",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Print a file tree of a project and its exports",
   "homepage": "https://github.com/grrowl/ts-print-tree",
   "keywords": [
@@ -15,11 +15,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/grrowl/ts-print-tree.git"
+    "url": "git+https://github.com/grrowl/ts-print-tree.git"
   },
   "main": "dist/index.js",
   "bin": {
-    "ts-print-tree": "./dist/cli.js"
+    "ts-print-tree": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc && chmod +x dist/cli.js",
