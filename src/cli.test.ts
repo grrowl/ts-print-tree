@@ -23,6 +23,7 @@ describe("cli module", () => {
   });
 
   beforeEach(() => {
+    mockLog.mockReset();
     jest.resetModules();
   });
 
