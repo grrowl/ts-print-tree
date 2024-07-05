@@ -43,15 +43,16 @@ The tool will output a tree-like structure of your project, including files, dir
 
 ```
 ts-print-tree/
-├── src/
-│   ├── index.ts
-│   │   └── function main(): void
-│   └── utils/
-│       └── helper.ts
-│           └── function formatDate(date: Date): string
+└── src/
+    ├── index.ts
+    │   ├── interface TreeNode
+    │   └── function tree(rootDir?: string, pathFilter?: (path: string) => boolean, visibilityLevel?: VisibilityLevel): TreeNode
+    └── utils/
+        └── helper.ts
+        └── function formatDate(date: Date): string
 ```
 
-More comprehensive example output can be found in the [test snapshots for this very project](https://github.com/grrowl/ts-print-tree/blob/main/src/__snapshots__/index.test.ts.snap).
+More comprehensive example output can be found in the [test snapshots for this very project](https://github.com/grrowl/ts-print-tree/blob/main/src/__snapshots__/cli.test.ts.snap).
 
 ## 🔧 Customization
 
